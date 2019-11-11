@@ -4,7 +4,7 @@ import '../App.css'
 class Login extends Component {
     render() {
         return (
-            <div>{this.props.loginData ?
+            <div>{
                 <div id="login" className="bg-dark text-light text-center ">
                     <div id="info" className="container w-25 bg-dark">
                         <h1 className="mb-5">Login</h1>
@@ -17,7 +17,7 @@ class Login extends Component {
 
                     </div>
 
-                </div> : null}
+                </div>}
 
             </div>
         );

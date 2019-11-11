@@ -4,7 +4,6 @@ import { IoMdLogIn } from 'react-icons/io';
 import { IoMdPerson } from 'react-icons/io';
 import { IoMdLogOut } from 'react-icons/io';
 
-
 class ProfileBar extends Component {
     render() {
         return (
