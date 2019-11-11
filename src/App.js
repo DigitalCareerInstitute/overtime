@@ -1,8 +1,8 @@
 import React from 'react';
-import './App.css';
+//import './App.css';
+import ProfileBar from './components/ProfileBar'; 
 
 var Splash = ()=> { return null; }
-var ProfileBar = ()=> { return null; }
 var Navbar = ()=> { return null; }
 var Login = ()=> { return null; }
 var Signup = ()=> { return null; }
