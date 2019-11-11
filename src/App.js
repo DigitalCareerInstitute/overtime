@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Navibar from "./components/Navibar";
 
 var Splash = ()=> { return null; }
 var ProfileBar = ()=> { return null; }
@@ -13,7 +14,7 @@ function App() {
     <div className="App">
       <Splash />
       <ProfileBar />
-      <Navbar />
+      <Navibar />
       <Login />
       <Signup />
       <Home />
