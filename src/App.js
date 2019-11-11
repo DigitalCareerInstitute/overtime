@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.css';
+
 import Navibar from "./components/Navibar";
 import ProfileBar from './components/ProfileBar';
+import Signup from './components/Signup';
+import Login from './components/Login';
 
 var Splash = ()=> { return null; }
-var Navbar = ()=> { return null; }
-var Login = ()=> { return null; }
-var Signup = ()=> { return null; }
 var Home = ()=> { return null; }
+
 
 function App() {
   return (
