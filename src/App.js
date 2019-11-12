@@ -6,17 +6,20 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import './App.css';
 
-var Splash = ()=> { return null; }
-var LandingPage = (props)=> { switch( props.page ){
-  case "login" :
-    return <Login />
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
-  case "signup" :
-    return <Signup />
+var Splash = ()=> { return <b>hi world</b>; }
 
-  default :
-    return <Splash />
-  }
+var LandingPage = (props)=> {
+  return (
+      <div>
+        <Switch>
+          <Route path="/" exact component={Splash} />
+          <Route path="/login"  component={Login}  />
+          <Route path="/signup" component={Signup} />
+        </Switch>
+      </div>
+  )
 }
 
 var Home = ()=> { return null; }
@@ -29,7 +32,7 @@ export class App extends Component {
         username: 'test',
         firstName: 'Michael',
         lastName: 'Test',
-        birthDate: '12/12/2015'
+        birthDate : '12/12/2015'
       },
       login : false,
       page : "login"
