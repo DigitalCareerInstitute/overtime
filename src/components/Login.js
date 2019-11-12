@@ -34,8 +34,8 @@ class Login extends Component {
         return (
             <form onSubmit={this.submit}>
             <div>{
-                <div id="login" className="bg-dark text-light text-center ">
-                    <div id="info" className="container w-25 bg-dark">
+                <div id="login" className=" text-light text-center ">
+                    <div id="info" className="container w-25">
                         <h1 className="mb-5">Login</h1>
                         <input onChange={this.change} name='userName' id="log-input" className="form-control mb-2" type="text" placeholder="Name" />
                         <input onChange={this.change} name='userPass' id="log-password"  className="form-control mb-4" type="password" placeholder="Password" />
