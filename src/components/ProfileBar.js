@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 class ProfileBar extends Component {
   render() {
     return (
-      <Navbar  className="justify-content-end mr-3">
+      <Navbar bg="light" className="justify-content-end mr-3">
         {this.props.login ? (
           <NavDropdown title="Welcome" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.2">
