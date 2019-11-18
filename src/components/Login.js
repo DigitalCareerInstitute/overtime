@@ -9,18 +9,28 @@ class Login extends Component {
        this.state={userName: '', userPass:'', error:false}
 
     }
-    submit = (e)=> {
+    submit = async (e)=> {
         let RegExpression = /^[a-zA-Z]*$/;
 
         e.preventDefault()
         if (RegExpression.test(this.state.userName)) {
             console.log('this is true !!')
             this.setState({error:false})
-
-        }
+            let response = await (
+                await fetch(
+                    '/login',
+                    {
+                        method: 'POST', headers: { 'content-type': 'application/json' },
+                        body: JSON.stringify(this.state)
+                    }
+                )
+            ).json()
+            if ( response.status === "error" ){
+                this.setState({ error: response.message });
+            } else window.location = '/'        }
 
         else {
-
+   
         this.setState({error:'haha error'})
         }
 }
@@ -41,7 +51,7 @@ class Login extends Component {
                         <input onChange={this.change} name='userPass' id="log-password"  className="form-control mb-4" type="password" placeholder="Password" />
                         { this.state.error ?
                         <Alert key='jhg' variant='danger'>
-                            {this.state.error}
+                                    {this.state.error}                                
                         </Alert> :null}
                         <button type="submit" className=" mb-5 btn btn-primary btn-block">Submit</button>
 
