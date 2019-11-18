@@ -10,24 +10,24 @@ class Login extends Component {
 
     }
     submit = (e)=> {
-        let RegExpression = /^[a-zA-Z]*$/;  
-       
+        let RegExpression = /^[a-zA-Z]*$/;
+
         e.preventDefault()
         if (RegExpression.test(this.state.userName)) {
-            console.log('this is true !!')  
-            this.setState({error:false})    
-            
-        } 
+            console.log('this is true !!')
+            this.setState({error:false})
 
-        else { 
-        
+        }
+
+        else {
+
         this.setState({error:'haha error'})
-        } 
+        }
 }
     change = (e)=>{
         this.setState({
             [e.target.name]:e.target.value
-        
+
         })
     }
     render() {

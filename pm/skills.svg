@@ -27,8 +27,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="533.65093"
-     inkscape:cy="298.31326"
+     inkscape:cx="762.22236"
+     inkscape:cy="584.02754"
      inkscape:document-units="mm"
      inkscape:current-layer="g1004"
      showgrid="false"
@@ -162,17 +162,6 @@
          width="167.82143"
          id="rect843"
          style="fill:#ffffff;fill-opacity:1;stroke:#ff9901;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-         x="61.988098"
-         y="139.38393"
-         id="text847"><tspan
-           sodipodi:role="line"
-           id="tspan845"
-           x="61.988098"
-           y="139.38393"
-           style="stroke-width:0.26458332">HTML</tspan></text>
       <rect
          style="fill:#ffffff;fill-opacity:1;stroke:#ff9901;stroke-width:0.47202182;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect849"
@@ -200,7 +189,7 @@
          height="11.578285"
          width="16.570152"
          id="rect855"
-         style="fill:#ffffff;fill-opacity:1;stroke:#ff9901;stroke-width:0.08764339;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="fill:#ff0000;fill-opacity:1;stroke:#ff9901;stroke-width:0.08764339;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <rect
          style="fill:#ffffff;fill-opacity:1;stroke:#ff9901;stroke-width:0.15485665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect857"
@@ -295,12 +284,12 @@
       <text
          id="text887"
          y="139.38393"
-         x="61.988098"
+         x="26.836313"
          style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
          xml:space="preserve"><tspan
            style="stroke-width:0.26458332"
            y="139.38393"
-           x="61.988098"
+           x="26.836313"
            id="tspan885"
            sodipodi:role="line">HTML</tspan></text>
       <rect
@@ -351,8 +340,8 @@
            y="241.74815"
            style="stroke-width:0.26458332">HTML Elements</tspan></text>
       <image
-         width="69.425911"
-         height="55.12038"
+         width="58.952297"
+         height="46.804905"
          preserveAspectRatio="none"
          style="image-rendering:optimizeSpeed"
          xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAMtCAIAAACO6pSyAAAAA3NCSVQICAjb4U/gAAAgAElEQVR4
@@ -8888,8 +8877,8 @@ ALYIAgAAAAAAwBZBAAAAAAAA2CIIAAAAAAAAWwQBAAAAAABgiyAAAAAAAABsEQQAAAAAAIAtggAA
 AAAAALBFEAAAAAAAALYIAgAAAAAAwBZBAAAAAAAA2CL/GzbeWf3sCbeBAAAAAElFTkSuQmCC
 "
          id="image917"
-         x="21.413649"
-         y="51.347874" />
+         x="26.650455"
+         y="55.505611" />
       <rect
          style="fill:#ffffff;fill-opacity:1;stroke:#ff9901;stroke-width:0.47709411;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect920"
@@ -8908,6 +8897,20 @@ AAAAALBFEAAAAAAAALYIAgAAAAAAwBZBAAAAAAAA2CL/GzbeWf3sCbeBAAAAAElFTkSuQmCC
            x="32.321739"
            y="29.51334"
            style="stroke-width:0.26458332">User info</tspan></text>
+      <rect
+         style="opacity:0.3;fill:#ff0000;fill-opacity:1;stroke:#ff9901;stroke-width:0.44823802;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect1025"
+         width="127.32974"
+         height="48.332718"
+         x="-10.559215"
+         y="199.91301" />
+      <rect
+         y="49.130787"
+         x="90.012741"
+         height="59.989418"
+         width="132.18288"
+         id="rect1027"
+         style="opacity:0.3;fill:#ff0000;fill-opacity:1;stroke:#ff9901;stroke-width:0.5088011;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
     <flowRoot
        xml:space="preserve"

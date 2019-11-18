@@ -5,8 +5,9 @@ import ProfileBar from './components/ProfileBar';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import './App.css';
+import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import UserContext from './userContext'
 
 var Splash = ()=> { return <b>hi world</b>; }
 
@@ -29,38 +30,37 @@ export class App extends Component {
     super(props)
     this.state = {
       user : {
-        username: 'test',
+        userName: 'test',
         firstName: 'Michael',
         lastName: 'Test',
         birthDate : '12/12/2015'
       },
-      login : false,
-      page : "login"
+      login : false
     }
   }
 
   render() {
     return (
-      <div className="App">
-        <Container fluid>
-                <Row>
-                  <Col md="10" sm="12">
-                    <Navibar />
-                    </Col>
-                    <Col md="2" sm="12">
-                      <ProfileBar login={this.state.login}/>
-                    </Col>
-              <Col>
-                { this.state.login
-                ?
-                  <Row><Col><Home /></Col></Row>
-                :
-                  <Row><Col><LandingPage page={this.state.page} /></Col></Row>
+      <UserContext.Provider value={this.state.login ? this.state.user : false}>
+        <div className="App">
+          <Container fluid>
+            <Row>
+              <Col md="10" sm="12">
+                <Navibar/>
+              </Col>
+              <Col md="2" sm="12">
+                <ProfileBar/>
+              </Col>
+              <Col> {
+                this.state.login
+                  ? <Row><Col><Home /></Col></Row>
+                  : <Row><Col><LandingPage page={this.state.page} /></Col></Row>
                 }
               </Col>
             </Row>
-        </Container>
-    </div>
+          </Container>
+        </div>
+      </UserContext.Provider>
     )
   }
 }
