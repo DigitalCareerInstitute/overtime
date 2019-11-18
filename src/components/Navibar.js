@@ -8,7 +8,7 @@ class Navibar extends Component {
       color: "white"
     };
     return (
-      <Navbar expand="lg" style={{ padding: 0, background: "#6D7FCC" }}>
+      <Navbar expand="lg" style={{ padding: 0, background: "rgb(4, 4, 54)" }}>
         <Navbar.Brand
           href="#home"
           style={{ marginRight: "100px", marginLeft: "10px" }}
