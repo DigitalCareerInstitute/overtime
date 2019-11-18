@@ -33,7 +33,8 @@ export class App extends Component {
         userName: 'test',
         firstName: 'Michael',
         lastName: 'Test',
-        birthDate : '12/12/2015'
+        birthDate : '12/12/2015',
+        skills: { HTML: 1 }
       },
       login : false
     }

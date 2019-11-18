@@ -1,12 +1,4 @@
-export const USER = {
-  profileinfo: { FirstName: "Micheal", Surname: "Högh" },
-  skills: {
-    HTML: 1,
-    HTMLElements: 0,
-    HTMLAttributes: 0,
-    HTMLStyle: 0
-  }
-}
+export const TOPLEVEL = ["HTML"]
 
 export const SKILLS = {
   HTML: {
