@@ -27,7 +27,7 @@ class SkillList extends Component {
         
 
         return (
-            <div>
+            <div className="w-100">
               {progressbars()}
             </div>
         )

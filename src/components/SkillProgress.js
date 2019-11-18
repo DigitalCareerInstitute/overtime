@@ -10,7 +10,7 @@ const SkillProgress = ({level, label}) => {
 
     return (
         <Link to={pathName} >
-            <ProgressBar className="w-100 my-3" variant="info" now={level} label={label}  />
+            <ProgressBar className="my-3" style={{width: "100%"}} variant="info" now={level} label={label}  />
         </Link>
     )
 }
