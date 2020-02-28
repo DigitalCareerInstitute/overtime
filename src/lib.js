@@ -2,7 +2,7 @@
 const { localStorage } = window;
 
 const renderTime = (diff)=>
-  `${diff.getHours()-1}h ${diff.getMinutes()}m ${diff.getSeconds()}s`
+  `${diff.getHours()-1}h:${diff.getMinutes()}m:${diff.getSeconds()}s`
 
 const loadStore = (defaults) =>
   JSON.parse(localStorage.getItem('overtime') || 'null') || defaults;

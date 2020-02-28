@@ -5,6 +5,15 @@
 .container {
   max-width: 80ch;
 }
+
+.input-group {
+  margin-bottom: 2vmin;
+}
+
+table .input-group {
+  margin-bottom: 0;
+}
+
 button.btn.trig {
   width: 100%;
   height: 30vmin;

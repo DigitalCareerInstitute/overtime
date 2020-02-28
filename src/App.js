@@ -17,7 +17,8 @@ import {
   faBusinessTime,
   faCheck,
   faTable,
-  faSkullCrossbones
+  faSkullCrossbones,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -33,6 +34,7 @@ const defaults  = {
   preset:['Work','Prep','Meet'],
   weeklyHours: 32,
   user:'teacher',
+  delPreset:false,
   counter: {
     active: false,
     start: null,
@@ -91,7 +93,15 @@ class Totals extends React.Component {
     this.setState({comment:e.target.value});
     this.state.commitCounterState(this.state);
   }
-  preset = key => e => this.setState({ comment: key })
+  addPreset = e => this.setState({ preset: [this.state.comment].concat(this.state.preset) })
+  delPreset = e => this.setState({ delPreset: ! this.state.delPreset })
+  preset = key => e =>
+    ! this.state.delPreset
+    ? this.setState({ comment: key })
+    : this.setState({
+      delPreset:false,
+      preset:this.state.preset.filter( v => v !== key )
+    })
   render(){
     const total = this.state.list.reduce( (total,rec) => {
       return total += rec[1];
@@ -105,11 +115,6 @@ class Totals extends React.Component {
     )}`
     return (
       <Container>
-        <Button onClick={this.toggle} className={ active ? 'trig active' : 'trig' }>
-          { this.state.active ? 'Stop' : 'Start' }
-          <br/>
-          { this.state.start ? renderTime(diff) : null }
-        </Button>
         <InputGroup>
           <Settings
             user={user}
@@ -117,25 +122,59 @@ class Totals extends React.Component {
             weeklyHours={weeklyHours}
             changeWeeklyHours={this.changeWeeklyHours}
           />
+        </InputGroup>
+        <Button onClick={this.toggle} className={ active ? 'trig active' : 'trig' }>
+          { this.state.active ? 'Stop' : 'Start' }
+          <br/>
+          { this.state.start ? renderTime(diff) : null }
+        </Button>
+        <InputGroup>
           <FormControl
             placeholder="Comment"
             onChange={this.change}
             value={this.state.comment}
           />
           <InputGroup.Append>
+            <Button onClick={this.addPreset}>
+              <FontAwesomeIcon icon={faPlus}/>
+            </Button>
             { preset.map( preset =>
               <Button key={preset} onClick={this.preset(preset)}>{preset}</Button>
             )}
+            <Button
+              variant={this.state.delPreset ? 'danger' : 'warning' }
+              onClick={this.delPreset}
+            >
+              <FontAwesomeIcon
+                icon={faSkullCrossbones}
+              />
+            </Button>
           </InputGroup.Append>
         </InputGroup>
-        <table className="table striped">
-          <thead><tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Comment</th>
-            <th width="1">Tools</th>
-          </tr></thead>
+        <table className="table table-striped">
           <tbody>
+            <tr>
+              <td>Total:</td>
+              <td>{renderTime(new Date(total))}</td>
+              <td colSpan={2}>
+                <InputGroup className="pull-right">
+                  <InputGroup.Prepend>
+                    <a className="btn btn-primary" download={`${user}.csv`} href={csv}>
+                      <FontAwesomeIcon icon={faTable}/>
+                    </a>
+                    <Button>Day</Button>
+                    <Button>Month</Button>
+                    <Button>Year</Button>
+                    <Button>Total</Button>
+                  </InputGroup.Prepend>
+                  <InputGroup.Append>
+                    <Button variant="danger">
+                      <FontAwesomeIcon icon={faSkullCrossbones}/>
+                    </Button>
+                  </InputGroup.Append>
+                </InputGroup>
+              </td>
+            </tr>
             { list.map( (row,id) => {
               const [date,time,comment] = row;
               return <tr key={id}>
@@ -154,15 +193,6 @@ class Totals extends React.Component {
               </tr>;
             })}
           </tbody>
-          <tfoot><tr>
-            <th>Total:</th>
-            <th colSpan={2}>{renderTime(new Date(total))}</th>
-            <td width="1">
-              <a className="btn" download={`${user}.csv`} href={csv}>
-                <FontAwesomeIcon icon={faTable}/>
-              </a>
-            </td>
-          </tr></tfoot>
         </table>
       </Container>
     );
@@ -172,7 +202,7 @@ class Totals extends React.Component {
 function Comment({value,changeComment}){
   const [edit,setEdit] = React.useState(false)
   return edit
-    ? <td>
+    ? <td width="99999999">
         <InputGroup>
           <FormControl value={value} onChange={changeComment}/>
           <InputGroup.Append>
@@ -182,20 +212,19 @@ function Comment({value,changeComment}){
           </InputGroup.Append>
         </InputGroup>
       </td>
-    : <td onClick={e => setEdit(true)}>{value}</td>
+    : <td width="99999999" onClick={e => setEdit(true)}>{value}</td>
 }
 
 function Settings(props){
   const [show,setShow] = React.useState(false);
   if (!show) return (
-    <InputGroup.Prepend>
-      <Button
-        onClick={e => setShow(!show)}
-        title="user / weeklyHours"
-      >
-        <FontAwesomeIcon icon={faBusinessTime}/> {props.user} / {props.weeklyHours} hrs
-      </Button>
-    </InputGroup.Prepend> )
+    <Button
+      onClick={e => setShow(!show)}
+      title="user / weeklyHours"
+    >
+      <FontAwesomeIcon icon={faBusinessTime}/> {props.user} / {props.weeklyHours} hrs
+    </Button>
+  )
   return (
     <>
       <InputGroup.Prepend>
