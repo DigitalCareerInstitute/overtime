@@ -3,6 +3,8 @@ import React from 'react';
 import './App.css';
 
 import {
+  Modal,
+  Form,
   Button,
   Container,
   FormControl,
@@ -16,7 +18,7 @@ import {
 import {
   faBusinessTime,
   faCheck,
-  faTable,
+  faDownload,
   faSkullCrossbones,
   faPlus
 } from '@fortawesome/free-solid-svg-icons'
@@ -35,6 +37,8 @@ const defaults  = {
   weeklyHours: 32,
   user:'teacher',
   delPreset:false,
+  mode:'Total',
+  showSettings:false,
   counter: {
     active: false,
     start: null,
@@ -70,6 +74,7 @@ class Totals extends React.Component {
     list[id][2] = e.target.value;
     this.setState({list});
   }
+  changeMode = mode => e => this.setState({mode});
   toggle = e => this.setState(
     this.state.active ? this.deactivate() : this.activate()
   )
@@ -106,7 +111,7 @@ class Totals extends React.Component {
     const total = this.state.list.reduce( (total,rec) => {
       return total += rec[1];
     },0);
-    const { list, start, active, preset, user, weeklyHours } = this.state;
+    const { showSettings, mode, list, start, active, preset, user, weeklyHours } = this.state;
     const diff = new Date( Date.now() - start );
     const csv = `data:text/csv;base64,${btoa(
       list.reduce((p,c) => {
@@ -115,13 +120,40 @@ class Totals extends React.Component {
     )}`
     return (
       <Container>
+        <SettingsModal
+          show={showSettings}
+          setShow={value => this.setState({showSettings:value})}
+          user={user}
+          changeUser={this.changeUser}
+          weeklyHours={weeklyHours}
+          changeWeeklyHours={this.changeWeeklyHours}
+        />
         <InputGroup>
-          <Settings
-            user={user}
-            changeUser={this.changeUser}
-            weeklyHours={weeklyHours}
-            changeWeeklyHours={this.changeWeeklyHours}
-          />
+          <InputGroup.Prepend>
+            <SettingsButton
+              show={showSettings}
+              setShow={value => this.setState({showSettings:value})}
+              user={user}
+              changeUser={this.changeUser}
+              weeklyHours={weeklyHours}
+              changeWeeklyHours={this.changeWeeklyHours}
+            />
+            { ['Total','Day','Month','Year'].map( m=>
+            <Button
+              variant={m === mode ? 'warning' : 'primary'}
+              key={m}
+              onClick={this.changeMode(m)}>
+                {m}
+            </Button> )}
+            <span className="input-group-text">
+              {renderTime(new Date(total))}
+            </span>
+          </InputGroup.Prepend>
+          <InputGroup.Append>
+            <a className="btn btn-primary" download={`${user}.csv`} href={csv}>
+            <FontAwesomeIcon icon={faDownload}/>
+            </a>
+          </InputGroup.Append>
         </InputGroup>
         <Button onClick={this.toggle} className={ active ? 'trig active' : 'trig' }>
           { this.state.active ? 'Stop' : 'Start' }
@@ -153,28 +185,6 @@ class Totals extends React.Component {
         </InputGroup>
         <table className="table table-striped">
           <tbody>
-            <tr>
-              <td>Total:</td>
-              <td>{renderTime(new Date(total))}</td>
-              <td colSpan={2}>
-                <InputGroup className="pull-right">
-                  <InputGroup.Prepend>
-                    <a className="btn btn-primary" download={`${user}.csv`} href={csv}>
-                      <FontAwesomeIcon icon={faTable}/>
-                    </a>
-                    <Button>Day</Button>
-                    <Button>Month</Button>
-                    <Button>Year</Button>
-                    <Button>Total</Button>
-                  </InputGroup.Prepend>
-                  <InputGroup.Append>
-                    <Button variant="danger">
-                      <FontAwesomeIcon icon={faSkullCrossbones}/>
-                    </Button>
-                  </InputGroup.Append>
-                </InputGroup>
-              </td>
-            </tr>
             { list.map( (row,id) => {
               const [date,time,comment] = row;
               return <tr key={id}>
@@ -215,9 +225,9 @@ function Comment({value,changeComment}){
     : <td width="99999999" onClick={e => setEdit(true)}>{value}</td>
 }
 
-function Settings(props){
-  const [show,setShow] = React.useState(false);
-  if (!show) return (
+function SettingsButton(props){
+  const {show,setShow} = props;
+  return (
     <Button
       onClick={e => setShow(!show)}
       title="user / weeklyHours"
@@ -225,24 +235,57 @@ function Settings(props){
       <FontAwesomeIcon icon={faBusinessTime}/> {props.user} / {props.weeklyHours} hrs
     </Button>
   )
+};
+
+function SettingsModal(props){
+  const {show,setShow} = props;
+  if (!show) return null;
   return (
-    <>
-      <InputGroup.Prepend>
-        <Button onClick={e => setShow(!show)}>
-          <FontAwesomeIcon icon={faBusinessTime}/>
+    <Modal.Dialog>
+      <Modal.Header>
+        <Modal.Title>Settings</Modal.Title>
+        <Button variant="danger" className='pull-right'>
+          <FontAwesomeIcon icon={faSkullCrossbones}/>
+          &nbsp;Delete Everything&nbsp;
+          <FontAwesomeIcon icon={faSkullCrossbones}/>
         </Button>
-      </InputGroup.Prepend>
-      <FormControl
-        name="user"
-        value={props.user}
-        onChange={props.changeUser}
-      />
-      <FormControl
-        name="weeklyHours"
-        value={props.weeklyHours}
-        onChange={props.changeWeeklyHours}
-      />
-    </>
+
+      </Modal.Header>
+
+      <Modal.Body>
+        <Form.Group>
+          <Form.Label>
+            User Name
+          </Form.Label>
+          <FormControl
+            name="user"
+            value={props.user}
+            onChange={props.changeUser}
+          />
+        </Form.Group>
+          <Form.Group>
+            <Form.Label>
+              Weekly Hours
+            </Form.Label>
+          <InputGroup>
+            <InputGroup.Prepend>
+              <FormControl
+                name="weeklyHours"
+                value={props.weeklyHours}
+                onChange={props.changeWeeklyHours}
+              />
+            </InputGroup.Prepend>
+            <InputGroup.Append>
+              <span className="input-group-text">hrs</span>
+            </InputGroup.Append>
+          </InputGroup>
+        </Form.Group>
+      </Modal.Body>
+
+      <Modal.Footer>
+        <Button onClick={e => setShow(!show)} variant="primary">Save changes</Button>
+      </Modal.Footer>
+    </Modal.Dialog>
 )};
 
 function App() {
