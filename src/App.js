@@ -117,7 +117,11 @@ class Totals extends React.Component {
             weeklyHours={weeklyHours}
             changeWeeklyHours={this.changeWeeklyHours}
           />
-          <FormControl onChange={this.change} value={this.state.comment}/>
+          <FormControl
+            placeholder="Comment"
+            onChange={this.change}
+            value={this.state.comment}
+          />
           <InputGroup.Append>
             { preset.map( preset =>
               <Button key={preset} onClick={this.preset(preset)}>{preset}</Button>
