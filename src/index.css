@@ -1,11 +1,15 @@
+:root {
+  font-size: 2vmin;
+}
+
 .container {
   max-width: 80ch;
 }
 button.btn.trig {
   width: 100%;
-  height: 40vmin;
+  height: 30vmin;
   border-radius: 5vmin;
-  font-size: 10vmin;
+  font-size: 8vmin;
   position: relative;
   left: 50%;
   transform: translate(-50%);
