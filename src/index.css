@@ -1,13 +1,28 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.container {
+  max-width: 80ch;
+}
+button.btn.trig {
+  width: 100%;
+  height: 40vmin;
+  border-radius: 5vmin;
+  font-size: 10vmin;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  margin-bottom: 2vmin;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+button.btn.trig.active {
+  background: red !important;
+}
+
+.container {
+  padding: 2vmin;
+}
+.form-control[name="weeklyHours"]{
+  max-width: 5ch;
+}
+
+td, th {
+  line-height: 2.5em
 }
