@@ -1,6 +1,10 @@
 ### DCO - DCI Overtime Tracker
 Simple Overtime Tracker for [DCI](https://digitalcareerinstitute.org)
-Written in simple React as the basis for an exercise test of the React Subject.
+Written in simple React as the basis for an exercise test of the
+React Subject.
+
+![Overtime Screenshot](https://github.com/digitalcareerinstitute/overtime/raw/master/screenshot.png)
+
 
 ### Licensed under GNU GPLv3
 DCO is free software; you can redistribute it and/or modify
