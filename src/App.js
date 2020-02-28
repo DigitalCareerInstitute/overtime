@@ -140,9 +140,9 @@ class Totals extends React.Component {
               const [date,time,comment] = row;
               return <tr key={id}>
                 <td>
-                  {(new Date(date).toLocaleDateString())}
+                  {(new Date(date).toLocaleDateString('de-DE'))}
                   &nbsp;
-                  {(new Date(date).toLocaleTimeString())}
+                  {(new Date(date).toLocaleTimeString('de-DE'))}
                 </td>
                 <td>{renderTime(new Date(time))}</td>
                 <Comment value={comment} changeComment={this.changeComment(id)}/>
