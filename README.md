@@ -5,7 +5,6 @@ React Subject.
 
 ![Overtime Screenshot](https://github.com/digitalcareerinstitute/overtime/raw/master/screenshot.png)
 
-
 ### Licensed under GNU GPLv3
 DCO is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
