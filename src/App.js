@@ -24,11 +24,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
+  recMatchesMode,
   renderTime,
   renderDate,
   renderHours,
   loadStore,
-  saveStore
+  saveStore,
+  purgeStore,
+  downloadName
 } from './lib'
 
 const defaults  = {
@@ -108,26 +111,27 @@ class Totals extends React.Component {
       preset:this.state.preset.filter( v => v !== key )
     })
   render(){
-    const total = this.state.list.reduce( (total,rec) => {
-      return total += rec[1];
-    },0);
     const { showSettings, mode, list, start, active, preset, user, weeklyHours } = this.state;
+    const total = this.state.list.reduce( (total,rec) => {
+      return recMatchesMode(rec,mode) ? total += rec[1] : total;
+    },0);
     const diff = new Date( Date.now() - start );
     const csv = `data:text/csv;base64,${btoa(
-      list.reduce((p,c) => {
+      list.filter( rec => recMatchesMode(rec,mode) ).reduce((p,c) => {
         return p += `${renderDate(c[0])},${renderHours(c[1])},${c[2]}\n`;
       },'')
     )}`
+    if ( showSettings ) return (
+    <SettingsModal
+      show={showSettings}
+      setShow={value => this.setState({showSettings:value})}
+      user={user}
+      changeUser={this.changeUser}
+      weeklyHours={weeklyHours}
+      changeWeeklyHours={this.changeWeeklyHours}
+    /> );
     return (
       <Container>
-        <SettingsModal
-          show={showSettings}
-          setShow={value => this.setState({showSettings:value})}
-          user={user}
-          changeUser={this.changeUser}
-          weeklyHours={weeklyHours}
-          changeWeeklyHours={this.changeWeeklyHours}
-        />
         <InputGroup>
           <InputGroup.Prepend>
             <SettingsButton
@@ -150,16 +154,11 @@ class Totals extends React.Component {
             </span>
           </InputGroup.Prepend>
           <InputGroup.Append>
-            <a className="btn btn-primary" download={`${user}.csv`} href={csv}>
+            <a className="btn btn-primary" download={downloadName(user,mode)} href={csv}>
             <FontAwesomeIcon icon={faDownload}/>
             </a>
           </InputGroup.Append>
         </InputGroup>
-        <Button onClick={this.toggle} className={ active ? 'trig active' : 'trig' }>
-          { this.state.active ? 'Stop' : 'Start' }
-          <br/>
-          { this.state.start ? renderTime(diff) : null }
-        </Button>
         <InputGroup>
           <FormControl
             placeholder="Comment"
@@ -183,9 +182,12 @@ class Totals extends React.Component {
             </Button>
           </InputGroup.Append>
         </InputGroup>
+        <Button onClick={this.toggle} className={ active ? 'trig active' : 'trig' }>
+          { this.state.active ? renderTime(diff) : 'Start' }
+        </Button>
         <table className="table table-striped">
           <tbody>
-            { list.map( (row,id) => {
+            { list.filter( rec => recMatchesMode(rec,mode) ).map( (row,id) => {
               const [date,time,comment] = row;
               return <tr key={id}>
                 <td>
@@ -244,7 +246,11 @@ function SettingsModal(props){
     <Modal.Dialog>
       <Modal.Header>
         <Modal.Title>Settings</Modal.Title>
-        <Button variant="danger" className='pull-right'>
+        <Button
+          variant="danger"
+          className='pull-right'
+          onClick={purgeStore}
+        >
           <FontAwesomeIcon icon={faSkullCrossbones}/>
           &nbsp;Delete Everything&nbsp;
           <FontAwesomeIcon icon={faSkullCrossbones}/>
