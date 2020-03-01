@@ -1,62 +1,42 @@
 
 import React from 'react';
 
-import {
-  Button,
-  Form,
-  FormControl,
-  InputGroup
-} from 'react-bootstrap';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import Button from '@material-ui/core/Button';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
+import SwapHorizontalCircle from '@material-ui/icons/SwapHorizontalCircle';
 
-import {
-  FontAwesomeIcon
-} from '@fortawesome/react-fontawesome'
-
-import {
-  faCheck,
-  faPlus,
-  faSyncAlt,
-  faSkullCrossbones
-} from '@fortawesome/free-solid-svg-icons'
-
-import { IconButton } from './Gui'
-
-function Comment({value,changeComment}){
-  const [edit,setEdit] = React.useState(false)
-  return edit
-    ? <td width="99999999">
-        <InputGroup>
-          <FormControl value={value} onChange={changeComment}/>
-          <InputGroup.Append>
-            <Button onClick={e => setEdit(false)}>
-              <FontAwesomeIcon icon={faCheck}/>
-            </Button>
-          </InputGroup.Append>
-        </InputGroup>
-      </td>
-    : <td width="99999999" onClick={e => setEdit(true)}>{value}</td>
-}
+import { makeStyles } from '@material-ui/core/styles';
 
 export function PresetList({
   preset, addPreset, delPresetId
 }){
   const [input,setInput] = React.useState('');
   return ( <>
-    <Form.Group>
-      <Form.Label>
-        Presets
-      </Form.Label>
-      <InputGroup>
-        <FormControl
-          name="user"
-          value={input}
-          onChange={e => setInput(e.target.value)}
-        />
-        <InputGroup.Append>
-          <IconButton onClick={e => addPreset(input)} icon={faPlus}/>
-        </InputGroup.Append>
-      </InputGroup>
-    </Form.Group>
+    <TextField
+      label="Add Preset"
+      name="addComment"
+      value={input}
+      onChange={e => setInput(e.target.value)}
+      variant="outlined"
+      fullWidth
+      InputProps={{
+        endAdornment:<InputAdornment position="end">
+          <IconButton
+            aria-label="add preset"
+            onClick={e => addPreset(input)}
+            edge="end"
+          >
+            <AddCircleOutline/>
+          </IconButton>
+        </InputAdornment>
+      }}
+      labelWidth={70}
+    />
     { preset.map( (preset,id) =>
       <Button key={id} variant="danger" className="preset"
         onClick={delPresetId(id)}
@@ -66,29 +46,50 @@ export function PresetList({
     )}
 </> )}
 
-export function CommentBar({
-  active, comment, changeComment, swapComment,
-  preset, setPreset, addPreset, delPreset, doDeletePreset
-}){ return (
-  <InputGroup>
-    <FormControl
-      placeholder="Comment"
-      onChange={changeComment}
-      value={comment}
-    />
-    <InputGroup.Append>
-      { active ? <IconButton onClick={swapComment} icon={faSyncAlt}/> : null }
-      <IconButton onClick={e => addPreset(comment)} icon={faPlus}/>
-      { preset.map( preset =>
-        <Button key={preset} onClick={setPreset(preset)}>{preset}</Button>
-      )}
-      <IconButton
-        variant={doDeletePreset ? 'danger' : 'warning' }
-        onClick={delPreset}
-        icon={faSkullCrossbones}
-      />
-    </InputGroup.Append>
-  </InputGroup>
-)}
+const useStyles = makeStyles(theme => ({
+  input: {
+    flexGrow: 1,
+    padding: theme.spacing(1),
+  },
+  paper: {
+    display:'flex',
+    margin: theme.spacing(1),
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}));
 
-export default Comment;
+export function CommentBar({
+  active, comment, setComment, swapComment,
+  preset, setPreset, addPreset, delPreset, doDeletePreset
+}){
+  const classes = useStyles();
+  if(!active) return null;
+  return (
+    <Paper className={classes.paper}>
+      <Autocomplete freeSolo
+        className={classes.input}
+        id="comment"
+        options={preset}
+        value={comment}
+        onChange={(e,v)=> setComment(v)}
+        renderInput={params =>
+        <TextField
+          onChange={e=> setComment(e.target.value)}
+          {...params}
+      />}/>
+      <IconButton
+        variant="contained"
+        aria-label="add preset"
+        onClick={e => addPreset(comment) }
+        ><AddCircleOutline/>
+      </IconButton>
+      <IconButton
+        variant="contained"
+        aria-label="add preset"
+        onClick={swapComment}
+        ><SwapHorizontalCircle/>
+      </IconButton>
+    </Paper>
+)}

@@ -1,9 +1,7 @@
 
 import React             from 'react';
-import { Container }     from 'react-bootstrap';
 import { SettingsModal } from './Settings'
 import { CommentBar }    from './Comment'
-import Counter           from './Counter'
 import List              from './List'
 import ListControls      from './ListControls'
 import MainControls      from './MainControls'
@@ -31,9 +29,15 @@ export default class Overtime extends React.Component {
   )
   changeMode = mode => e => this.setState({mode});
   changeUser = e => this.setState({user:e.target.value});
+  setComment = comment => this.setState({comment});
   changeComment = (id) => e => {
     const { list } = this.state;
     list[id][2] = e.target.value;
+    this.setState({list});
+  }
+  editRecord = (id, value)=> {
+    const { list } = this.state;
+    list[id] = value;
     this.setState({list});
   }
   swapComment = e => {
@@ -78,6 +82,7 @@ export default class Overtime extends React.Component {
     },0);
     if ( showSettings ) return (
     <SettingsModal
+      setState={this.setState.bind(this)}
       show={showSettings} setShow={value => this.setState({showSettings:value})}
       user={user} changeUser={this.changeUser}
       weeklyHours={weeklyHours} changeWeeklyHours={this.changeWeeklyHours}
@@ -86,17 +91,17 @@ export default class Overtime extends React.Component {
       mailToAddress={mailToAddress} setMailToAddress={this.setMailToAddress}
     /> );
     return (
-      <Container>
+      <>
         <MainControls list={list} total={total}
+          toggle={this.toggle} start={start} active={active}
           user={user} changeUser={this.changeUser}
           mode={mode} changeMode={this.changeMode}
           weeklyHours={weeklyHours} changeWeeklyHours={this.changeWeeklyHours}
           setState={this.setState.bind(this)} showSettings={this.showSettings}
           mailToAddress={mailToAddress}
         />
-        <Counter active={active} start={start} toggle={this.toggle}/>
         <CommentBar active={active} swapComment={this.swapComment}
-          comment={comment} changeComment={this.change}
+          comment={comment} setComment={this.setComment}
           preset={preset} addPreset={this.addPreset}
           setPreset={this.setPreset} delPreset={this.delPreset}
           doDeletePreset={this.state.delPreset}
@@ -107,11 +112,12 @@ export default class Overtime extends React.Component {
           weeklyHours={weeklyHours} changeWeeklyHours={this.changeWeeklyHours}
           setState={this.setState.bind(this)} showSettings={this.showSettings}
         />
-        <List list={list} mode={mode}
+        <List {...{list,mode,preset}}
           changeComment={this.changeComment}
           deleteRecord={this.delete}
+          editRecord={this.editRecord}
         />
-      </Container>
+      </>
     );
   }
 }

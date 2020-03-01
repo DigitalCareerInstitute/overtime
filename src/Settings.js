@@ -2,12 +2,9 @@
 import React from 'react';
 
 import {
-  Modal,
-  Form,
-  Button,
-  FormControl,
-  InputGroup
-} from 'react-bootstrap';
+  Button, TextField, Typography,
+  AppBar,Toolbar, IconButton, makeStyles
+} from '@material-ui/core';
 
 import {
   FontAwesomeIcon
@@ -24,6 +21,26 @@ import {
 
 import { PresetList } from './Comment'
 
+import Close from '@material-ui/icons/Close';
+
+const useStyles = makeStyles(theme => ({
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+  paper: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+    flexGrow: 1,
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }
+}));
+
 function SettingsButton(props){
   const {show,setShow} = props;
   return (
@@ -38,74 +55,44 @@ function SettingsButton(props){
 
 function SettingsModal({
   show, setShow, preset, addPreset, delPresetId, delPreset, user, changeUser,
-  weeklyHours, changeWeeklyHours, mailToAddress, setMailToAddress
+  weeklyHours, changeWeeklyHours, mailToAddress, setMailToAddress, setState
 }){
+  const classes = useStyles();
   if (!show) return null;
   return (
-    <Modal.Dialog>
-      <Modal.Header>
-        <Modal.Title>Settings</Modal.Title>
-        <Button
-          variant="danger"
-          className='pull-right'
-          onClick={purgeStore}
-        >
-          <FontAwesomeIcon icon={faSkullCrossbones}/>
-          &nbsp;Delete Everything&nbsp;
-          <FontAwesomeIcon icon={faSkullCrossbones}/>
-        </Button>
-
-      </Modal.Header>
-
-      <Modal.Body>
-        <Form.Group>
-          <Form.Label>
-            User Name
-          </Form.Label>
-          <FormControl
-            name="user"
-            value={user}
-            onChange={changeUser}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>
-            eMail Target
-          </Form.Label>
-          <FormControl
-            name="mailToAddress"
-            value={mailToAddress}
-            onChange={setMailToAddress}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>
-            Weekly Hours
-          </Form.Label>
-          <InputGroup>
-            <InputGroup.Prepend>
-              <FormControl
-                name="weeklyHours"
-                value={weeklyHours}
-                onChange={changeWeeklyHours}
-              />
-            </InputGroup.Prepend>
-            <InputGroup.Append>
-              <span className="input-group-text">hrs</span>
-            </InputGroup.Append>
-          </InputGroup>
-        </Form.Group>
+    <>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
+            onClick={e => setState({showSettings:false}) }>
+            <Close/>
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            Settings
+          </Typography>
+          <Button
+            color="secondary"
+            variant="contained"
+            className='pull-right'
+            onClick={purgeStore}
+          >
+            <FontAwesomeIcon icon={faSkullCrossbones}/>
+            &nbsp;Delete Everything&nbsp;
+            <FontAwesomeIcon icon={faSkullCrossbones}/>
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <form className={classes.paper} noValidate autoComplete="off">
+        <TextField fullWidth variant="outlined" label="User" name="user" value={user} onChange={changeUser}/>
+        <TextField fullWidth variant="outlined" label="eMail Target" name="mailToAddress" value={mailToAddress} onChange={setMailToAddress}/>
+        <TextField fullWidth variant="outlined" label="Weekly Hours" name="weeklyHours" value={weeklyHours} onChange={changeWeeklyHours}/>
         <PresetList
           preset={preset}
           addPreset={addPreset}
           delPresetId={delPresetId}
         />
-      </Modal.Body>
-
-      <Modal.Footer>
-        <Button onClick={e => setShow(!show)} variant="primary">Save changes</Button>
-      </Modal.Footer>
-    </Modal.Dialog>
+      </form>
+    </>
 )};
 
 export { SettingsButton, SettingsModal }

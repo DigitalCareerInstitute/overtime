@@ -11,8 +11,8 @@ const recMatchesMode = ( rec, mode ) => {
   return date.isBetween(modeStart,modeEnd);
 }
 
-const renderTime = (diff)=>
-  `${diff.getHours()-1}h:${diff.getMinutes()}m:${diff.getSeconds()}s`
+const renderTime = (start)=>
+  moment(start).toNow(true)
 
 const loadStore = (defaults) =>
   JSON.parse(localStorage.getItem('overtime') || 'null') || defaults;
@@ -23,8 +23,11 @@ const saveStore = (state) =>
 const renderDate = (date) =>
   ( new Date(date) ).toLocaleDateString('de-DE')
 
+const renderTotal = (date) =>
+  moment(date).to(moment(0),true)
+
 const renderHours = (date) =>
-  date / 1000 / 60 / 60
+  moment(date).format('HH:MM')
 
 const downloadName = (user,mode) =>
   `${user.replace(/[^a-zA-Z]+/g,'_')}_${mode.toLowerCase()}.csv`
@@ -41,6 +44,7 @@ export {
   renderHours,
   loadStore,
   saveStore,
+  renderTotal,
   purgeStore,
   downloadName
 };

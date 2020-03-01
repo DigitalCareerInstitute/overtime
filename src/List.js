@@ -1,47 +1,69 @@
 
 import React from 'react';
 
-import {
-  Button,
-} from 'react-bootstrap';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import IconButton from '@material-ui/core/IconButton';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import HighlightOff from '@material-ui/icons/HighlightOff';
 
-import {
-  FontAwesomeIcon
-} from '@fortawesome/react-fontawesome'
+import { TextField, } from '@material-ui/core';
+import { DateTimePicker, TimePicker } from '@material-ui/pickers';
 
-import {
-  faSkullCrossbones
-} from '@fortawesome/free-solid-svg-icons'
+import { recMatchesMode } from './lib'
+import moment from 'moment'
 
-import {
-  recMatchesMode,
-  renderTime
-} from './lib'
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
 
-
-import Comment from './Comment'
-
-export default function({list,mode,deleteRecord,changeComment}){
+export default function({list,preset,mode,deleteRecord,changeComment,editRecord}){
+  const classes = useStyles();
   return (
-  <table className="table table-striped">
-    <tbody>
-      { list.filter( rec => recMatchesMode(rec,mode) ).map( (row,id) => {
-        const [date,time,comment] = row;
-        return <tr key={id}>
-          <td>
-            {(new Date(date).toLocaleDateString('de-DE'))}
-            &nbsp;
-            {(new Date(date).toLocaleTimeString('de-DE'))}
-          </td>
-          <td>{renderTime(new Date(time))}</td>
-          <Comment value={comment} changeComment={changeComment(id)}/>
-          <td width="1">
-            <Button variant="danger" onClick={deleteRecord(id)}>
-              <FontAwesomeIcon icon={faSkullCrossbones}/>
-            </Button>
-          </td>
-        </tr>;
-      })}
-    </tbody>
-  </table>
+  <Table className={classes.root}><tbody> {
+    list.filter( rec => recMatchesMode(rec,mode) ).map( (row,id) => {
+      const [date,time,comment] = row;
+      let utcTime = moment(time).utcOffset(0)
+      return (
+      <TableRow key={id}>
+        <TableCell>
+          <DateTimePicker
+            className="list-date"
+            format="DD.MM.YYYY HH:mm"
+            value={date}
+            ampm={false}
+            onChange={ value => editRecord(id,[value.valueOf(),time,comment])}
+          />
+          <TimePicker
+            format="HH:mm"
+            className="list-time"
+            value={utcTime} ampm={false}
+            onChange={ value => editRecord(id,[date,value.valueOf(),comment])}
+          />
+        </TableCell>
+        <TableCell style={{flexGrow:'1'}}>
+          <Autocomplete freeSolo
+            className={classes.input}
+            id="comment"
+            options={preset}
+            value={comment}
+            onChange={ (e,value) => editRecord(id,[date,time,value])}
+            renderInput={params =>
+            <TextField
+              onChange={ value => editRecord(id,[date,time,value])}
+              {...params}
+          />}/>
+        </TableCell>
+        <TableCell>
+          <IconButton onClick={deleteRecord(id)}>
+            <HighlightOff/>
+          </IconButton>
+        </TableCell>
+      </TableRow> )})}
+  </tbody></Table>
 )};

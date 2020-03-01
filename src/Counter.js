@@ -1,12 +1,10 @@
 
 import React from 'react';
-import { Button } from 'react-bootstrap';
-import { renderTime } from './lib'
+import Alert from '@material-ui/lab/Alert';
+import { renderHours } from './lib'
 
-export default function Counter({active,start,toggle}){
+export default function Counter({active,start}){
   const diff = new Date( Date.now() - start );
-  return (
-  <Button onClick={toggle} className={ active ? 'trig active' : 'trig' }>
-    { active ? renderTime(diff) : 'Start' }
-  </Button>
+  if ( ! active ) return null;
+  return ( <Alert variant="filled" severity="error">{ renderHours(diff) }</Alert>
 )}

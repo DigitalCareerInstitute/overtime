@@ -1,18 +1,3 @@
-:root {
-  font-size: 2vmin;
-}
-
-.container {
-  max-width: 80ch;
-}
-
-.input-group {
-  margin-bottom: 1vmin;
-}
-
-table .input-group {
-  margin-bottom: 0;
-}
 
 .input-group.list-controls {
   width: -webkit-fill-available;
@@ -22,16 +7,7 @@ table .input-group {
   border-radius: 4px;
 }
 
-.input-group.list-controls .input-group-prepend {
-  position: absolute;
-}
-
-.input-group.list-controls .input-group-append {
-  position: absolute;
-  right: 0;
-}
-
-button.btn.trig {
+.MuiButton-containedPrimary.trig {
   width: 100%;
   height: 30vmin;
   border-radius: 5vmin;
@@ -42,22 +18,27 @@ button.btn.trig {
   margin-bottom: 1vmin;
 }
 
+.MuiButton-containedPrimary.trig.active {
+  background: red !important;
+}
+
 button.btn.preset {
   margin-left: .5vmin;
   margin-right: .5vmin;
 }
 
-button.btn.trig.active {
-  background: red !important;
+.list-date {
+  min-width: 16ch; width: 16ch;
+  margin-right: 1ch !important;
 }
 
-.container {
-  padding: 1vmin;
+.list-time {
+  min-width: 6.2ch; width: 5.2ch;
 }
-.form-control[name="weeklyHours"]{
-  max-width: 5ch;
+tr {
+  display: flex !important;
 }
-
-td, th {
-  line-height: 2.5em
+td:last-of-type {
+  display: inline-block !important;
+  flex-grow: 1 !important
 }
