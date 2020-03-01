@@ -7,7 +7,7 @@
 }
 
 .input-group {
-  margin-bottom: 2vmin;
+  margin-bottom: 1vmin;
 }
 
 table .input-group {
@@ -17,7 +17,7 @@ table .input-group {
 .input-group.list-controls {
   width: -webkit-fill-available;
   display: block;
-  height: 2.3em;
+  height: 2.35em;
   background-color: #007bff;
   border-radius: 4px;
 }
@@ -28,7 +28,7 @@ table .input-group {
 
 .input-group.list-controls .input-group-append {
   position: absolute;
-  right: 1px;
+  right: 0;
 }
 
 button.btn.trig {
@@ -39,7 +39,12 @@ button.btn.trig {
   position: relative;
   left: 50%;
   transform: translate(-50%);
-  margin-bottom: 2vmin;
+  margin-bottom: 1vmin;
+}
+
+button.btn.preset {
+  margin-left: .5vmin;
+  margin-right: .5vmin;
 }
 
 button.btn.trig.active {
@@ -47,7 +52,7 @@ button.btn.trig.active {
 }
 
 .container {
-  padding: 2vmin;
+  padding: 1vmin;
 }
 .form-control[name="weeklyHours"]{
   max-width: 5ch;

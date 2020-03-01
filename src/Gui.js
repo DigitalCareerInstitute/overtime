@@ -9,10 +9,11 @@ import {
   FontAwesomeIcon
 } from '@fortawesome/react-fontawesome'
 
-function IconButton({onClick,variant,key,icon}){
+function IconButton({onClick,variant,key,icon,children,className}){
   return (
-    <Button onClick={onClick} variant={variant} key={key}>
+    <Button onClick={onClick} variant={variant} key={key} className={className}>
       <FontAwesomeIcon icon={icon}/>
+      {children}
     </Button>
   );
 }

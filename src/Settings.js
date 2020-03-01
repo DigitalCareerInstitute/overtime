@@ -22,6 +22,8 @@ import {
   purgeStore
 } from './lib'
 
+import { PresetList } from './Comment'
+
 function SettingsButton(props){
   const {show,setShow} = props;
   return (
@@ -34,8 +36,10 @@ function SettingsButton(props){
   )
 };
 
-function SettingsModal(props){
-  const {show,setShow} = props;
+function SettingsModal({
+  show, setShow, preset, addPreset, delPresetId, delPreset, user, changeUser,
+  weeklyHours, changeWeeklyHours, mailToAddress, setMailToAddress
+}){
   if (!show) return null;
   return (
     <Modal.Dialog>
@@ -60,20 +64,30 @@ function SettingsModal(props){
           </Form.Label>
           <FormControl
             name="user"
-            value={props.user}
-            onChange={props.changeUser}
+            value={user}
+            onChange={changeUser}
           />
         </Form.Group>
-          <Form.Group>
-            <Form.Label>
-              Weekly Hours
-            </Form.Label>
+        <Form.Group>
+          <Form.Label>
+            eMail Target
+          </Form.Label>
+          <FormControl
+            name="mailToAddress"
+            value={mailToAddress}
+            onChange={setMailToAddress}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>
+            Weekly Hours
+          </Form.Label>
           <InputGroup>
             <InputGroup.Prepend>
               <FormControl
                 name="weeklyHours"
-                value={props.weeklyHours}
-                onChange={props.changeWeeklyHours}
+                value={weeklyHours}
+                onChange={changeWeeklyHours}
               />
             </InputGroup.Prepend>
             <InputGroup.Append>
@@ -81,6 +95,11 @@ function SettingsModal(props){
             </InputGroup.Append>
           </InputGroup>
         </Form.Group>
+        <PresetList
+          preset={preset}
+          addPreset={addPreset}
+          delPresetId={delPresetId}
+        />
       </Modal.Body>
 
       <Modal.Footer>

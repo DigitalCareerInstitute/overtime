@@ -7,10 +7,10 @@ const defaults  = {
   delPreset:false,
   mode:'Total',
   showSettings:false,
-  counter: {
-    active: false,
-    start: null,
-    comment: '' }
+  active: false,
+  start: null,
+  comment: '',
+  mailToAddress:'boss@digitalcareerinstitute.org'
 };
 
 export default defaults;
