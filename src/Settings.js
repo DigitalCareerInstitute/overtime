@@ -12,7 +12,6 @@ import {
 
 import {
   faBusinessTime,
-  faSkullCrossbones,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -22,6 +21,7 @@ import {
 import { PresetList } from './Comment'
 
 import Close from '@material-ui/icons/Close';
+import Error from '@material-ui/icons/Error';
 
 const useStyles = makeStyles(theme => ({
   menuButton: {
@@ -55,7 +55,8 @@ function SettingsButton(props){
 
 function SettingsModal({
   show, setShow, preset, addPreset, delPresetId, delPreset, user, changeUser,
-  weeklyHours, changeWeeklyHours, mailToAddress, setMailToAddress, setState
+  weeklyHours, changeWeeklyHours, mailToAddress, setMailToAddress, setState,
+  fixStore
 }){
   const classes = useStyles();
   if (!show) return null;
@@ -70,15 +71,8 @@ function SettingsModal({
           <Typography variant="h6" className={classes.title}>
             Settings
           </Typography>
-          <Button
-            color="secondary"
-            variant="contained"
-            className='pull-right'
-            onClick={purgeStore}
-          >
-            <FontAwesomeIcon icon={faSkullCrossbones}/>
-            &nbsp;Delete Everything&nbsp;
-            <FontAwesomeIcon icon={faSkullCrossbones}/>
+          <Button color="secondary" variant="contained" onClick={purgeStore}>
+            <Error/> Delete Everything <Error/>
           </Button>
         </Toolbar>
       </AppBar>
@@ -92,6 +86,9 @@ function SettingsModal({
           delPresetId={delPresetId}
         />
       </form>
+      <Button color="secondary" variant="contained" onClick={fixStore}>
+        <Error/> Fix Database <Error/>
+      </Button>
     </>
 )};
 

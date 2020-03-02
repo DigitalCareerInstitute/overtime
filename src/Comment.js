@@ -38,7 +38,9 @@ export function PresetList({
       labelWidth={70}
     />
     { preset.map( (preset,id) =>
-      <Button key={id} variant="danger" className="preset"
+      <Button
+        key={id} variant="contained" className="preset"
+        color="secondary"
         onClick={delPresetId(id)}
       >
         {preset}

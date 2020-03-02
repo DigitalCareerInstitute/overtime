@@ -7,7 +7,7 @@ import ListControls      from './ListControls'
 import MainControls      from './MainControls'
 import defaults          from './defaults'
 import { recMatchesMode, loadStore, saveStore } from './lib'
-
+import moment from 'moment'
 export default class Overtime extends React.Component {
   constructor(props){
     super(props);
@@ -93,6 +93,14 @@ export default class Overtime extends React.Component {
     ! this.state.delPreset
     ? this.setState({ comment: key })
     : this.delPresetId(this.state.preset.indexOf(key))(e)
+
+  fixStore = _ => {
+    const list = this.state.list.map( item => {
+      item[0] = moment(item[0]).substract(moment(item[1]).utcOffset(0))
+      return item;
+    });
+    this.setState({list:list});
+  }
 
   render(){
 
