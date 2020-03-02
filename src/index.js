@@ -14,7 +14,7 @@ import MomentUtils from '@date-io/moment'
 
 import moment from 'moment';
 import 'moment/locale/de';
-moment.locale('de',{ relativeTime : {
+moment.updateLocale('de',{ relativeTime : {
   future : '%s',
   past : '%s',
   s : '>1m',
