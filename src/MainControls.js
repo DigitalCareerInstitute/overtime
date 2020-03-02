@@ -1,14 +1,21 @@
 
-
 import React from 'react';
-import { AppBar,Toolbar, Typography, IconButton, makeStyles } from '@material-ui/core';
+
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  makeStyles
+} from '@material-ui/core';
+
 import { renderTotal, renderDate, renderTime, renderHours, recMatchesMode, downloadName } from './lib'
 
-import Menu from '@material-ui/icons/Menu';
-import CoudDownload from '@material-ui/icons/CloudDownload';
-import Mail from '@material-ui/icons/Mail';
+import Menu              from '@material-ui/icons/Menu';
+import CoudDownload      from '@material-ui/icons/CloudDownload';
+import Mail              from '@material-ui/icons/Mail';
 import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
-import HighlightOff from '@material-ui/icons/HighlightOff';
+import HighlightOff      from '@material-ui/icons/HighlightOff';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,19 +29,22 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ListControls({
+export default function MainControls({
   setState, changeUser, changeWeeklyHours, changeMode,
   showSettings, user, mode, weeklyHours, total, list,
   active, mailToAddress, toggle, start
 }){
+
   const classes = useStyles();
+
   const csv = React.useMemo( function(){
-  return `data:text/csv;base64,${btoa(
-      list.filter( rec => recMatchesMode(rec,mode) ).reduce((p,c) => {
-        return p += `${renderDate(c[0])},${renderHours(c[1])},${c[2]}\n`;
-      },'')
-    )}`
+    return `data:text/csv;base64,${btoa(
+        list.filter( rec => recMatchesMode(rec,mode) ).reduce((p,c) => {
+          return p += `${renderDate(c[0])},${renderHours(c[1])},${c[2]}\n`;
+        },'')
+      )}`
   },[mode,list]);
+
   const mailto = React.useMemo( function(){
     return (
       `mailto:?to=${mailToAddress}` +
@@ -52,6 +62,7 @@ export default function ListControls({
         "------------------------------------------------\n"
       )}`
   )},[mode,list,user,mailToAddress]);
+
   return (
   <AppBar position="static">
     <Toolbar>

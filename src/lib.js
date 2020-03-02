@@ -27,7 +27,7 @@ const renderTotal = (date) =>
   moment(date).to(moment(0),true)
 
 const renderHours = (date) =>
-  moment(date).format('HH:MM')
+  moment(date).utcOffset(0).format('HH:MM')
 
 const downloadName = (user,mode) =>
   `${user.replace(/[^a-zA-Z]+/g,'_')}_${mode.toLowerCase()}.csv`

@@ -68,15 +68,16 @@ export function CommentBar({
   if(!active) return null;
   return (
     <Paper className={classes.paper}>
-      <Autocomplete freeSolo
+      <Autocomplete
+        freeSolo
         className={classes.input}
         id="comment"
         options={preset}
         value={comment}
         onChange={(e,v)=> setComment(v)}
-        renderInput={params =>
+        renderInput={ params =>
         <TextField
-          onChange={e=> setComment(e.target.value)}
+          onChange={e => setComment(e.target.value)}
           {...params}
       />}/>
       <IconButton

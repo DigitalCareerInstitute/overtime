@@ -4,7 +4,6 @@ const defaults  = {
   preset:['Work','Prep','Meet'],
   weeklyHours: 32,
   user:'teacher',
-  delPreset:false,
   mode:'Total',
   showSettings:false,
   active: false,
