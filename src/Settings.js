@@ -55,8 +55,7 @@ function SettingsButton(props){
 
 function SettingsModal({
   show, setShow, preset, addPreset, delPresetId, delPreset, user, changeUser,
-  weeklyHours, changeWeeklyHours, mailToAddress, setMailToAddress, setState,
-  fixStore
+  weeklyHours, changeWeeklyHours, mailToAddress, setMailToAddress, setState
 }){
   const classes = useStyles();
   if (!show) return null;
@@ -86,9 +85,6 @@ function SettingsModal({
           delPresetId={delPresetId}
         />
       </form>
-      <Button color="secondary" variant="contained" onClick={fixStore}>
-        <Error/> Fix Database <Error/>
-      </Button>
     </>
 )};
 
