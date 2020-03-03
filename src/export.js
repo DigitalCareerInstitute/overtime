@@ -1,7 +1,6 @@
 
 import {
-  renderTotal, renderDate,
-  renderHours, recMatchesMode
+  renderDate, renderHours, recMatchesMode
 } from './lib'
 
 export function toCSV([mode,list]){
@@ -14,19 +13,23 @@ export function toCSV([mode,list]){
 };
 
 export function toMailURL([mode,list,user,mailToAddress]){
+  const total = list.reduce( (total,rec) => {
+    return recMatchesMode(rec,mode) ? total += rec[1] : total;
+  },0);
   return (
     `mailto:?to=${mailToAddress}` +
     `&subject=${encodeURIComponent(`Overtime ${user}`)}` +
     `&body=${encodeURIComponent(
       "Hi,\n" +
-      "this is my overtime report as tab separated values,\n" +
-      "you can copy paste them directly into excel or google docs,\n\n" +
+      "this is my overtime report,\n\n" +
       "Best regards,\n" +
       `${user}\n\n` +
       "------------------------------------------------\n" +
       list.filter( rec => recMatchesMode(rec,mode) ).reduce((p,c) => {
         return p += `${renderDate(c[0])}\t${renderHours(c[1])}\t${c[2]}\n`;
       },'') +
+      "------------------------------------------------\n" +
+      `Total: ${renderHours(total)} hours\n` +
       "------------------------------------------------\n"
     )}`
 )};

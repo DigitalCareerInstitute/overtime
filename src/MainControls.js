@@ -39,11 +39,15 @@ export default function MainControls({
 
   const classes = useStyles();
 
-  const args   = [ mode, list, user, mailToAddress ];
-  const csv    = React.useMemo( ()=> toCSV(args),     args );
-  const mailto = React.useMemo( ()=> toMailURL(args), args );
-  // const csv    = React.useMemo( toCSV , [mode,list] );
-  // const mailto = React.useMemo( toMailURL, [mode,list,user,mailToAddress] );
+  const csv    = React.useMemo(
+    ()=> toCSV([ mode, list ]),
+    [ mode, list ]
+  );
+
+  const mailto = React.useMemo(
+    ()=> toMailURL( [ mode, list, user, mailToAddress ]),
+    [ mode, list, user, mailToAddress ]
+  );
 
   return (
   <AppBar position="static">
