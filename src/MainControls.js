@@ -9,13 +9,15 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-import { renderTotal, renderDate, renderTime, renderHours, recMatchesMode, downloadName } from './lib'
+import { renderTotal, renderTime, downloadName } from './lib'
 
 import Menu              from '@material-ui/icons/Menu';
 import CoudDownload      from '@material-ui/icons/CloudDownload';
 import Mail              from '@material-ui/icons/Mail';
 import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
 import HighlightOff      from '@material-ui/icons/HighlightOff';
+
+import { toMailURL, toCSV } from './export'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,31 +39,11 @@ export default function MainControls({
 
   const classes = useStyles();
 
-  const csv = React.useMemo( function(){
-    return `data:text/csv;base64,${btoa(
-        list.filter( rec => recMatchesMode(rec,mode) ).reduce((p,c) => {
-          return p += `${renderDate(c[0])},${renderHours(c[1])},${c[2]}\n`;
-        },'')
-      )}`
-  },[mode,list]);
-
-  const mailto = React.useMemo( function(){
-    return (
-      `mailto:?to=${mailToAddress}` +
-      `&subject=${encodeURIComponent(`Overtime ${user}`)}` +
-      `&body=${encodeURIComponent(
-        "Hi,\n" +
-        "this is my overtime report as tab separated values,\n" +
-        "you can copy paste them directly into excel or google docs,\n\n" +
-        "Best regards,\n" +
-        `${user}\n\n` +
-        "------------------------------------------------\n" +
-        list.filter( rec => recMatchesMode(rec,mode) ).reduce((p,c) => {
-          return p += `${renderDate(c[0])}\t${renderHours(c[1])}\t${c[2]}\n`;
-        },'') +
-        "------------------------------------------------\n"
-      )}`
-  )},[mode,list,user,mailToAddress]);
+  const args   = [ mode, list, user, mailToAddress ];
+  const csv    = React.useMemo( ()=> toCSV(args),     args );
+  const mailto = React.useMemo( ()=> toMailURL(args), args );
+  // const csv    = React.useMemo( toCSV , [mode,list] );
+  // const mailto = React.useMemo( toMailURL, [mode,list,user,mailToAddress] );
 
   return (
   <AppBar position="static">

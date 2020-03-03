@@ -94,14 +94,6 @@ export default class Overtime extends React.Component {
     ? this.setState({ comment: key })
     : this.delPresetId(this.state.preset.indexOf(key))(e)
 
-  fixStore = _ => {
-    const list = this.state.list.map( item => {
-      item[0] = item[0] - item[1]
-      return item;
-    });
-    this.setState({list:list});
-  }
-
   render(){
 
     const {

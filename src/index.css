@@ -40,5 +40,21 @@ tr {
 }
 td:last-of-type {
   display: inline-block !important;
-  flex-grow: 1 !important
+}
+
+.MuiIconButton-root {
+  padding: 0px !important;
+  margin-top: 4px!important;
+  margin-right: 24px!important;
+}
+
+@media ( max-width: 500px ) {
+  .MuiTableCell-root {
+    padding: 8px !important;
+  }
+  .MuiIconButton-root {
+    padding: 0px !important;
+    margin-top: 4px!important;
+    margin-right: 24px!important;
+  }
 }
