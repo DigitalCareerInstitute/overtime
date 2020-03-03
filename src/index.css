@@ -35,9 +35,11 @@ button.btn.preset {
 .list-time {
   min-width: 6.2ch; width: 5.2ch;
 }
+
 tr {
   display: flex !important;
 }
+
 td:last-of-type {
   display: inline-block !important;
 }
@@ -45,7 +47,6 @@ td:last-of-type {
 .MuiIconButton-root {
   padding: 0px !important;
   margin-top: 4px!important;
-  margin-right: 24px!important;
 }
 
 @media ( max-width: 500px ) {
@@ -55,6 +56,5 @@ td:last-of-type {
   .MuiIconButton-root {
     padding: 0px !important;
     margin-top: 4px!important;
-    margin-right: 24px!important;
   }
 }
