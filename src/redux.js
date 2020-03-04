@@ -59,8 +59,7 @@ const overtimeReducer = ( state = preloadedState , action )=> {
     case 'toggleShortBreaks': state = { ...state, countShortBreaks: ! state.countShortBreaks }; break;
     case 'clearTimer':        clearInterval(state.timer); break;
     default: break; }
-  state.list = state.list.sort( (a,b)=> a[0] - b[0] )
-  console.log(state.list);
+  state.list = state.list.sort( (a,b)=> b[0] - a[0] );
   save(state); return state;
 }
 

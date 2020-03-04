@@ -48,7 +48,7 @@ export function toMailURL([mode,list,user,mailToAddress,countBreaks,countShortBr
       `${user}\n\n` +
       "------------------------------------------------\n" +
       list
-      .sort( (a,b)=> a[0]-b[0] )
+      .sort( (a,b)=> b[0]-a[0] )
       .filter( rec => recIsntBreak(rec,countBreaks,countShortBreaks) )
       .filter( rec => recMatchesMode(rec,mode) )
       .reduce((p,c) => {
