@@ -49,6 +49,7 @@ const overtimeReducer = ( state = preloadedState , action )=> {
     case 'setUser':           state = { ...state, user:value}; break;
     case 'setMailToAddress':  state = { ...state, mailToAddress:value}; break;
     case 'setComment':        state = { ...state, comment:value}; break;
+    case 'setEdit':           state = { ...state, editRow:value}; break;
     case 'swapComment':       if ( ! active ) return state;
                               state = { ...state, ...deactivate(), ...activate() }; break;
     case 'toggle':            state = { ...state, ...(active ? deactivate() : activate()) }; break;
@@ -59,11 +60,11 @@ const overtimeReducer = ( state = preloadedState , action )=> {
     case 'toggleShortBreaks': state = { ...state, countShortBreaks: ! state.countShortBreaks }; break;
     case 'clearTimer':        clearInterval(state.timer); break;
     default: break; }
-  state.list = state.list.sort( (a,b)=> b[0] - a[0] );
   save(state); return state;
 }
 
 export const overtimeActions = function(dispatch){ return {
+  setEdit:           function(value){       dispatch({ type:'setEdit',           value        }); },
   setTimerComponent: function(value){       dispatch({ type:'setTimerComponent', value        }); },
   addRecord:         function(value){       dispatch({ type:'addRecord',         value        }); },
   delRecord:         function(index){       dispatch({ type:'delRecord',         index        }); },
