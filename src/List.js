@@ -10,8 +10,8 @@ import Autocomplete                     from '@material-ui/lab/Autocomplete';
 import HighlightOff                     from '@material-ui/icons/HighlightOff';
 
 import { TextField, }                   from '@material-ui/core';
-import { DateTimePicker, TimePicker }   from '@material-ui/pickers';
-import { recMatchesMode, recIsntBreak } from './lib'
+import { DateTimePicker, TimePicker, DatePicker }   from '@material-ui/pickers';
+import { recMatchesMode }               from './lib'
 import moment                           from 'moment'
 
 import { connect }                      from 'react-redux';
@@ -22,8 +22,11 @@ import {
 
 const useStyles = makeStyles(theme => ({
   root: {
+    '& b':{
+      margin: theme.spacing(1),
+      display: 'inline-block'
+    },
     '& td:last-of-type':{
-      display: 'inline-block',
       paddingLeft: 0
     },
     '& td:nth-of-type(2)':{
@@ -37,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 export default connect(
   overtimeProps,
   overtimeActions
-)( function({list,preset,mode,delRecord,editRecord}){
+)( function({list,preset,mode,delRecord,editRecord,workHours}){
   const classes = useStyles();
   return (
   <Table className={classes.root}><tbody>{
@@ -47,6 +50,25 @@ export default connect(
       const [date,time,comment] = row;
       let utcTime = moment(time).utcOffset(0)
       return (
+      comment === 'Workday'
+      ? <TableRow className="workday" key={id}>
+          <TableCell colSpan={2}>
+            <DatePicker
+              className="list-date day"
+              format="DD.MM."
+              value={date}
+              ampm={false}
+              onChange={ value => editRecord(id,[value.valueOf(),time,comment])}
+            />
+            <b>{moment(date).format('dddd')} / {workHours}h</b>
+          </TableCell>
+          <TableCell>
+            <IconButton onClick={e => delRecord(id)}>
+              <HighlightOff/>
+            </IconButton>
+          </TableCell>
+        </TableRow>
+      :
       <TableRow key={id}>
         <TableCell>
           <DateTimePicker

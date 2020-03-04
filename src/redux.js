@@ -1,5 +1,6 @@
 
 import { createStore } from 'redux'
+import moment          from 'moment'
 import defaults        from "./defaults"
 
 const { localStorage } = window;
@@ -38,10 +39,11 @@ const overtimeReducer = ( state = preloadedState , action )=> {
   const setTimer = (c) => setInterval(t => { c.forceUpdate() }, 1000 );
   switch (type) {
     case 'setTimerComponent': timerComponent = value; break;
+    case 'insertWorkday':     state = { ...state, list:[[moment().startOf('day').valueOf(),-state.workHours*1000*60*60,'Workday']].concat(list) }; break;
     case 'addRecord':         state = { ...state, list:[value].concat(list) }; break;
     case 'delRecord':         state = { ...state, list:[...(list.filter( (_,id)=> id !== index ))] }; break;
     case 'editRecord':        list[index] = value; state = { ...state, list:list.slice() }; break;
-    case 'setWeeklyHours':    state = { ...state, weeklyHours:parseFloat(value)}; break;
+    case 'setWorkHours':      state = { ...state, workHours:parseFloat(value)}; break;
     case 'setMode':           state = { ...state, mode:value}; break;
     case 'setPreset':         state = { ...state, comment:value }; break;
     case 'setUser':           state = { ...state, user:value}; break;
@@ -57,6 +59,8 @@ const overtimeReducer = ( state = preloadedState , action )=> {
     case 'toggleShortBreaks': state = { ...state, countShortBreaks: ! state.countShortBreaks }; break;
     case 'clearTimer':        clearInterval(state.timer); break;
     default: break; }
+  state.list = state.list.sort( (a,b)=> a[0] - b[0] )
+  console.log(state.list);
   save(state); return state;
 }
 
@@ -65,7 +69,7 @@ export const overtimeActions = function(dispatch){ return {
   addRecord:         function(value){       dispatch({ type:'addRecord',         value        }); },
   delRecord:         function(index){       dispatch({ type:'delRecord',         index        }); },
   editRecord:        function(index,value){ dispatch({ type:'editRecord',        value, index }); },
-  setWeeklyHours:    function(value){       dispatch({ type:'setWeeklyHours',    value        }); },
+  setWorkHours:      function(value){       dispatch({ type:'setWorkHours',      value        }); },
   setMode:           function(value){       dispatch({ type:'setMode',           value        }); },
   setPreset:         function(value){       dispatch({ type:'setPreset',         value        }); },
   setUser:           function(value){       dispatch({ type:'setUser',           value        }); },
@@ -78,7 +82,8 @@ export const overtimeActions = function(dispatch){ return {
   clearTimer:        function(){            dispatch({type:'clearTimer',                      }); },
   toggleSettings:    function(){            dispatch({type:'toggleSettings',                  }); },
   toggleCountBreaks: function(){            dispatch({type:'toggleCountBreaks',               }); },
-  toggleShortBreaks: function(){            dispatch({type:'toggleShortBreaks',               }); }
+  toggleShortBreaks: function(){            dispatch({type:'toggleShortBreaks',               }); },
+  insertWorkday:     function(){            dispatch({type:'insertWorkday',                   }); }
 }};
 
 export const overtimeProps = state => state

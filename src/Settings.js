@@ -47,7 +47,7 @@ export default connect(
 )( function SettingsModal({
   toggleSettings,
   user, setUser,
-  weeklyHours, setWeeklyHours,
+  workHours, setWorkHours,
   mailToAddress, setMailToAddress,
   countBreaks, toggleCountBreaks,
   countShortBreaks, toggleShortBreaks,
@@ -72,7 +72,7 @@ export default connect(
       <form className={classes.paper} noValidate autoComplete="off">
         <TextField fullWidth variant="outlined" label="User" name="user" value={user} onChange={e=>setUser(e.target.value)}/>
         <TextField fullWidth variant="outlined" label="eMail Target" name="mailToAddress" value={mailToAddress} onChange={e=>setMailToAddress(e.target.value)}/>
-        <TextField fullWidth variant="outlined" label="Weekly Hours" name="weeklyHours" value={weeklyHours} onChange={e=>setWeeklyHours(e.target.value)}/>
+        <TextField fullWidth variant="outlined" label="Work Hours" name="workHours" value={workHours} onChange={e=>setWorkHours(e.target.value)}/>
         <FormControlLabel
            control={
             <Checkbox

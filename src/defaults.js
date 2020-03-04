@@ -2,7 +2,7 @@
 const defaults  = {
   list: [],
   preset: ['Work','Prep','Meet'],
-  weeklyHours: 32,
+  workHours: 32,
   user: 'teacher',
   mode: 'Total',
   showSettings: false,

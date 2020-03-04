@@ -17,12 +17,13 @@ import {
 } from './lib'
 
 export function toCSV([mode,list,countBreaks,countShortBreaks]){
-  const total = list
+  const total = Math.max(0,list
   .filter( rec => recIsntBreak(rec,countBreaks,countShortBreaks) )
   .filter( rec => recMatchesMode(rec,mode) )
-  .reduce( (total,rec) => total + rec[1],0);
+  .reduce( (total,rec) => total + rec[1],0));
   return `data:text/csv;base64,${btoa(
       list
+      .sort((a,b)=> b[0]-a[0])
       .filter( rec => recIsntBreak(rec,countBreaks,countShortBreaks) )
       .filter( rec => recMatchesMode(rec,mode) )
       .reduce((p,c) => {
@@ -33,10 +34,10 @@ export function toCSV([mode,list,countBreaks,countShortBreaks]){
 };
 
 export function toMailURL([mode,list,user,mailToAddress,countBreaks,countShortBreaks]){
-  const total = list
+  const total = Math.max(0,list
   .filter( rec => recIsntBreak(rec,countBreaks,countShortBreaks) )
   .filter( rec => recMatchesMode(rec,mode) )
-  .reduce( (total,rec) => total + rec[1],0);
+  .reduce( (total,rec) => total + rec[1],0));
   return (
     `mailto:?to=${mailToAddress}` +
     `&subject=${encodeURIComponent(`Overtime ${user}`)}` +
@@ -46,7 +47,11 @@ export function toMailURL([mode,list,user,mailToAddress,countBreaks,countShortBr
       "Best regards,\n" +
       `${user}\n\n` +
       "------------------------------------------------\n" +
-      list.filter( rec => recMatchesMode(rec,mode) ).reduce((p,c) => {
+      list
+      .sort( (a,b)=> a[0]-b[0] )
+      .filter( rec => recIsntBreak(rec,countBreaks,countShortBreaks) )
+      .filter( rec => recMatchesMode(rec,mode) )
+      .reduce((p,c) => {
         return p += `${renderDate(c[0])}\t${renderHours(c[1])}\t${c[2]}\n`;
       },'') +
       "------------------------------------------------\n" +

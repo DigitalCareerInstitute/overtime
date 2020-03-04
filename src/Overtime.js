@@ -30,12 +30,12 @@ export default connect(
   render(){
     const {showSettings,mode,list,countBreaks,countShortBreaks} = this.props;
 
-    const total = list
+    const total = Math.max(0,list
     .filter( rec => recIsntBreak(rec,countBreaks,countShortBreaks) )
     .filter( rec => recMatchesMode(rec,mode) )
     .reduce( (total,rec) => {
-      return recMatchesMode(rec,mode) ? total += rec[1] : total;
-    },0);
+      return recMatchesMode(rec,mode) ? total + rec[1] : total;
+    },0));
 
     if ( showSettings ) return <SettingsModal/>;
 

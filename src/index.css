@@ -32,6 +32,19 @@ button.btn.preset {
   margin-right: 1ch !important;
 }
 
+.list-date.day {
+  min-width: 5.7ch; width: 5.7ch;
+  margin-right: 1ch !important;
+}
+
+td[colspan="2"]{
+  flex-grow: 1
+}
+
+tr > b {
+  flex-grow: 1
+}
+
 .list-time {
   min-width: 6.2ch; width: 5.2ch;
 }

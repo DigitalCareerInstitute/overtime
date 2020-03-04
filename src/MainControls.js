@@ -14,6 +14,8 @@ import { renderTotal, renderTime } from './lib'
 import Menu                 from '@material-ui/icons/Menu';
 import PlayCircleOutline    from '@material-ui/icons/PlayCircleOutline';
 import HighlightOff         from '@material-ui/icons/HighlightOff';
+import Star                 from '@material-ui/icons/Star';
+import StarHalf             from '@material-ui/icons/StarHalf';
 
 import ExportButtons        from './export'
 
@@ -39,7 +41,7 @@ constructor(props){
 }
 render(){
   const {
-    total, active, toggle, start, classes, toggleSettings
+    total, active, toggle, start, classes, toggleSettings, insertWorkday
   } = this.props;
 
   return (
@@ -56,6 +58,9 @@ render(){
       </Typography>
       <IconButton className={classes.menuButton} color="inherit" aria-label="mail" onClick={e=>toggle()}>
         { !active ? <PlayCircleOutline/> : <HighlightOff/> }
+      </IconButton>
+      <IconButton className={classes.menuButton} color="inherit" aria-label="workday" onClick={e=>insertWorkday()}>
+        <Star/>
       </IconButton>
       <ExportButtons/>
     </Toolbar>
