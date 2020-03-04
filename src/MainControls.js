@@ -39,8 +39,7 @@ constructor(props){
 }
 render(){
   const {
-    total, active, toggle, start,
-    classes, toggleSettings
+    total, active, toggle, start, classes, toggleSettings
   } = this.props;
 
   return (

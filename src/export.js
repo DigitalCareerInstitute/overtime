@@ -13,22 +13,30 @@ import {
 } from './redux'
 
 import {
-  renderDate, renderHours, recMatchesMode
+  renderDate, renderHours, recMatchesMode, recIsntBreak
 } from './lib'
 
-export function toCSV([mode,list]){
+export function toCSV([mode,list,countBreaks,countShortBreaks]){
+  const total = list
+  .filter( rec => recIsntBreak(rec,countBreaks,countShortBreaks) )
+  .filter( rec => recMatchesMode(rec,mode) )
+  .reduce( (total,rec) => total + rec[1],0);
   return `data:text/csv;base64,${btoa(
-      list.filter( rec => recMatchesMode(rec,mode) ).reduce((p,c) => {
+      list
+      .filter( rec => recIsntBreak(rec,countBreaks,countShortBreaks) )
+      .filter( rec => recMatchesMode(rec,mode) )
+      .reduce((p,c) => {
         const [date,time,comment] = [renderDate(c[0]),renderHours(c[1]),c[2]];
         return p += `${date},${time},${comment}\n`;
-      },'')
+      },'') + `total,${renderHours(total)}`
     )}`;
 };
 
-export function toMailURL([mode,list,user,mailToAddress]){
-  const total = list.reduce( (total,rec) => {
-    return recMatchesMode(rec,mode) ? total += rec[1] : total;
-  },0);
+export function toMailURL([mode,list,user,mailToAddress,countBreaks,countShortBreaks]){
+  const total = list
+  .filter( rec => recIsntBreak(rec,countBreaks,countShortBreaks) )
+  .filter( rec => recMatchesMode(rec,mode) )
+  .reduce( (total,rec) => total + rec[1],0);
   return (
     `mailto:?to=${mailToAddress}` +
     `&subject=${encodeURIComponent(`Overtime ${user}`)}` +
@@ -55,17 +63,17 @@ export default connect(
   overtimeProps,
   overtimeActions
 )(
-function({mode,list,user,mailToAddress}){
+function({mode,list,user,mailToAddress,countBreaks,countShortBreaks}){
   const classes = useStyles();
 
   const csv = React.useMemo (
-    ()=> toCSV([mode,list]),
-    [mode,list]
+    ()=> toCSV([mode,list,countBreaks,countShortBreaks]),
+    [mode,list,countBreaks,countShortBreaks]
   );
 
   const mailto = React.useMemo (
-    ()=> toMailURL([mode,list,user,mailToAddress]),
-    [mode,list,user,mailToAddress]
+    ()=> toMailURL([mode,list,user,mailToAddress,countBreaks,countShortBreaks]),
+    [mode,list,user,mailToAddress,countBreaks,countShortBreaks]
   );
 
   return ( <>

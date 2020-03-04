@@ -33,7 +33,6 @@ export const PresetList = connect(
           <IconButton
             aria-label="add preset"
             onClick={e => { addPreset(input); setInput('') } }
-            edge="end"
           >
             <AddCircleOutline/>
           </IconButton>

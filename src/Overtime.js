@@ -5,7 +5,10 @@ import CommentBar         from './CommentBar'
 import List               from './List'
 import ListControls       from './ListControls'
 import MainControls       from './MainControls'
-import { recMatchesMode } from './lib'
+import {
+  recMatchesMode,
+  recIsntBreak
+} from './lib'
 
 import { connect }        from 'react-redux';
 import {
@@ -25,9 +28,12 @@ export default connect(
   }
   componentWillUnmount(){ this.props.clearTimer() }
   render(){
-    const { showSettings, mode, list } = this.props;
+    const {showSettings,mode,list,countBreaks,countShortBreaks} = this.props;
 
-    const total = list.reduce( (total,rec) => {
+    const total = list
+    .filter( rec => recIsntBreak(rec,countBreaks,countShortBreaks) )
+    .filter( rec => recMatchesMode(rec,mode) )
+    .reduce( (total,rec) => {
       return recMatchesMode(rec,mode) ? total += rec[1] : total;
     },0);
 

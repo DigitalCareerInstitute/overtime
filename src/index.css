@@ -40,10 +40,6 @@ tr {
   display: flex !important;
 }
 
-td:last-of-type {
-  display: inline-block !important;
-}
-
 .MuiIconButton-root {
   padding: 0px !important;
   margin-top: 4px!important;

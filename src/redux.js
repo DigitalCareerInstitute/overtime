@@ -53,6 +53,8 @@ const overtimeReducer = ( state = preloadedState , action )=> {
     case 'addPreset':         state = { ...state,  preset: [value].concat(state.preset) }; break;
     case 'delPresetId':       state = { ...state,  delPreset:false, preset: state.preset.filter( (_,i) => i !== index ) }; break;
     case 'toggleSettings':    state = { ...state, showSettings: ! state.showSettings }; break;
+    case 'toggleCountBreaks': state = { ...state, countBreaks: ! state.countBreaks }; break;
+    case 'toggleShortBreaks': state = { ...state, countShortBreaks: ! state.countShortBreaks }; break;
     case 'clearTimer':        clearInterval(state.timer); break;
     default: break; }
   save(state); return state;
@@ -74,7 +76,9 @@ export const overtimeActions = function(dispatch){ return {
   swapComment:       function(){            dispatch({ type:'swapComment'                     }); },
   toggle:            function(){            dispatch({type:'toggle',                          }); },
   clearTimer:        function(){            dispatch({type:'clearTimer',                      }); },
-  toggleSettings:    function(){            dispatch({type:'toggleSettings',                  }); }
+  toggleSettings:    function(){            dispatch({type:'toggleSettings',                  }); },
+  toggleCountBreaks: function(){            dispatch({type:'toggleCountBreaks',               }); },
+  toggleShortBreaks: function(){            dispatch({type:'toggleShortBreaks',               }); }
 }};
 
 export const overtimeProps = state => state

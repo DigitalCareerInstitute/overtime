@@ -22,6 +22,13 @@ import {
 
 const useStyles = makeStyles(theme => ({
   root: {
+    '& td:last-of-type':{
+      display: 'inline-block',
+      paddingLeft: 0
+    },
+    '& td:nth-of-type(2)':{
+      paddingLeft: 0
+    },
     width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
@@ -35,7 +42,6 @@ export default connect(
   return (
   <Table className={classes.root}><tbody>{
     list
-    .filter( rec => recIsntBreak(rec,false,false) )
     .filter( rec => recMatchesMode(rec,mode) )
     .map( (row,id) => {
       const [date,time,comment] = row;

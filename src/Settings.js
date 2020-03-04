@@ -2,7 +2,8 @@
 import React from 'react';
 
 import {
-  Button, TextField, Typography, AppBar,Toolbar, IconButton, makeStyles
+  Button, TextField, Typography, AppBar,Toolbar, IconButton, makeStyles,
+  FormControlLabel, Checkbox
 } from '@material-ui/core';
 
 import {
@@ -28,6 +29,9 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     '& > *': {
+      marginBottom: theme.spacing(2),
+    },
+    '& > button': {
       margin: theme.spacing(1),
     },
     flexGrow: 1,
@@ -42,9 +46,11 @@ export default connect(
   overtimeActions
 )( function SettingsModal({
   toggleSettings,
-  user,          setUser,
-  weeklyHours,   setWeeklyHours,
-  mailToAddress, setMailToAddress
+  user, setUser,
+  weeklyHours, setWeeklyHours,
+  mailToAddress, setMailToAddress,
+  countBreaks, toggleCountBreaks,
+  countShortBreaks, toggleShortBreaks,
 }){
   const classes = useStyles();
   return (
@@ -67,6 +73,24 @@ export default connect(
         <TextField fullWidth variant="outlined" label="User" name="user" value={user} onChange={e=>setUser(e.target.value)}/>
         <TextField fullWidth variant="outlined" label="eMail Target" name="mailToAddress" value={mailToAddress} onChange={e=>setMailToAddress(e.target.value)}/>
         <TextField fullWidth variant="outlined" label="Weekly Hours" name="weeklyHours" value={weeklyHours} onChange={e=>setWeeklyHours(e.target.value)}/>
+        <FormControlLabel
+           control={
+            <Checkbox
+             checked={countBreaks}
+             onChange={toggleCountBreaks}
+             value="countBreaks"
+            />}
+           label="Count Breaks"
+         />
+         <FormControlLabel
+           control={
+            <Checkbox
+             checked={countShortBreaks}
+             onChange={toggleShortBreaks}
+             value="countShortBreaks"
+            />}
+           label="Count Breaks Under 15 Minutes"
+         />
         <PresetList/>
       </form>
     </>
