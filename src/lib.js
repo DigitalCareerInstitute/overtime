@@ -11,6 +11,14 @@ const recMatchesMode = ( rec, mode ) => {
   return date.isBetween(modeStart,modeEnd);
 }
 
+const recIsntBreak = ( rec, countBreaks=false, countBreaksUnder15Minutes = false ) => {
+  if ( countBreaks ) return true;
+  if ( rec[2].toLowerCase() === 'break' ){
+    if ( countBreaksUnder15Minutes && rec[1] < 1000 * 60 * 15 ) return true;
+    return false;
+  } return true;
+}
+
 const renderTime = (start)=>
   moment(start).toNow(true)
 
@@ -38,6 +46,7 @@ const purgeStore = e => {
   }}
 
 export {
+  recIsntBreak,
   recMatchesMode,
   renderTime,
   renderDate,

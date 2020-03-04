@@ -1,10 +1,14 @@
 
+import * as serviceWorker from './serviceWorker';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.css'
+import { Provider } from 'react-redux'
+
 import './index.css';
+
 import Overtime from './Overtime';
-import * as serviceWorker from './serviceWorker';
+import store from './redux'
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +18,7 @@ import MomentUtils from '@date-io/moment'
 
 import moment from 'moment';
 import 'moment/locale/de';
+
 moment.updateLocale('de',{ relativeTime : {
   future : '%s',
   past : '%s',
@@ -49,12 +54,14 @@ function ThemeSwitcher({children}){
 }
 
 ReactDOM.render(
-  ( <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={'de'}>
-      <ThemeSwitcher>
-        <CssBaseline />
-        <Overtime/>
-      </ThemeSwitcher>
-    </MuiPickersUtilsProvider>
+  ( <Provider store={store}>
+      <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={'de'}>
+        <ThemeSwitcher>
+          <CssBaseline />
+          <Overtime/>
+        </ThemeSwitcher>
+      </MuiPickersUtilsProvider>
+    </Provider>
   ), document.getElementById('root'));
 
 serviceWorker.register();

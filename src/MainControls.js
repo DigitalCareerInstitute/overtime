@@ -6,54 +6,48 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  makeStyles
+  withStyles
 } from '@material-ui/core';
 
-import { renderTotal, renderTime, downloadName } from './lib'
+import { renderTotal, renderTime } from './lib'
 
-import Menu              from '@material-ui/icons/Menu';
-import CoudDownload      from '@material-ui/icons/CloudDownload';
-import Mail              from '@material-ui/icons/Mail';
-import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline';
-import HighlightOff      from '@material-ui/icons/HighlightOff';
+import Menu                 from '@material-ui/icons/Menu';
+import PlayCircleOutline    from '@material-ui/icons/PlayCircleOutline';
+import HighlightOff         from '@material-ui/icons/HighlightOff';
 
-import { toMailURL, toCSV } from './export'
+import ExportButtons        from './export'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
+import { connect }          from 'react-redux';
+import {
+  overtimeProps,
+  overtimeActions
+} from './redux'
 
-export default function MainControls({
-  setState, changeUser, changeWeeklyHours, changeMode,
-  showSettings, user, mode, weeklyHours, total, list,
-  active, mailToAddress, toggle, start
-}){
+const classes = theme => ({
+  root: { flexGrow: 1 },
+  menuButton: { marginRight: theme.spacing(2) },
+  title: { flexGrow: 1, },
+});
 
-  const classes = useStyles();
-
-  const csv    = React.useMemo(
-    ()=> toCSV([ mode, list ]),
-    [ mode, list ]
-  );
-
-  const mailto = React.useMemo(
-    ()=> toMailURL( [ mode, list, user, mailToAddress ]),
-    [ mode, list, user, mailToAddress ]
-  );
+export default withStyles(classes)(connect(
+  overtimeProps,
+  overtimeActions
+)( class MainControls extends React.Component {
+constructor(props){
+  super(props);
+  props.setTimerComponent(this);
+}
+render(){
+  const {
+    total, active, toggle, start,
+    classes, toggleSettings
+  } = this.props;
 
   return (
   <AppBar position="static">
     <Toolbar>
       <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
-        onClick={e => setState({showSettings:true}) }>
+        onClick={ toggleSettings }>
         <Menu/>
       </IconButton>
       <Typography variant="h6" className={classes.title}>
@@ -61,15 +55,10 @@ export default function MainControls({
         ? `${renderTime(start)} / ${renderTotal(total)} `
         : renderTotal(total) }
       </Typography>
-      <IconButton className={classes.menuButton} color="inherit" aria-label="mail" onClick={toggle}>
+      <IconButton className={classes.menuButton} color="inherit" aria-label="mail" onClick={e=>toggle()}>
         { !active ? <PlayCircleOutline/> : <HighlightOff/> }
       </IconButton>
-      <IconButton className={classes.menuButton} href={mailto} color="inherit" aria-label="mail">
-        <Mail/>
-      </IconButton>
-      <IconButton className={classes.menuButton} download={downloadName(user,mode)} href={csv} color="inherit" aria-label="csv">
-        <CoudDownload/>
-      </IconButton>
+      <ExportButtons/>
     </Toolbar>
   </AppBar>
-)}
+)}}));

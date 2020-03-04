@@ -1,19 +1,24 @@
 
-import React from 'react';
+import React                            from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import IconButton from '@material-ui/core/IconButton';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import HighlightOff from '@material-ui/icons/HighlightOff';
+import { makeStyles }                   from '@material-ui/core/styles';
+import Table                            from '@material-ui/core/Table';
+import TableRow                         from '@material-ui/core/TableRow';
+import TableCell                        from '@material-ui/core/TableCell';
+import IconButton                       from '@material-ui/core/IconButton';
+import Autocomplete                     from '@material-ui/lab/Autocomplete';
+import HighlightOff                     from '@material-ui/icons/HighlightOff';
 
-import { TextField, } from '@material-ui/core';
-import { DateTimePicker, TimePicker } from '@material-ui/pickers';
+import { TextField, }                   from '@material-ui/core';
+import { DateTimePicker, TimePicker }   from '@material-ui/pickers';
+import { recMatchesMode, recIsntBreak } from './lib'
+import moment                           from 'moment'
 
-import { recMatchesMode } from './lib'
-import moment from 'moment'
+import { connect }                      from 'react-redux';
+import {
+  overtimeProps,
+  overtimeActions
+} from './redux'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,11 +27,17 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function({list,preset,mode,deleteRecord,changeComment,editRecord}){
+export default connect(
+  overtimeProps,
+  overtimeActions
+)( function({list,preset,mode,delRecord,editRecord}){
   const classes = useStyles();
   return (
-  <Table className={classes.root}><tbody> {
-    list.filter( rec => recMatchesMode(rec,mode) ).map( (row,id) => {
+  <Table className={classes.root}><tbody>{
+    list
+    .filter( rec => recIsntBreak(rec,false,false) )
+    .filter( rec => recMatchesMode(rec,mode) )
+    .map( (row,id) => {
       const [date,time,comment] = row;
       let utcTime = moment(time).utcOffset(0)
       return (
@@ -55,15 +66,15 @@ export default function({list,preset,mode,deleteRecord,changeComment,editRecord}
             onChange={ (e,value) => editRecord(id,[date,time,value])}
             renderInput={params =>
             <TextField
-              onChange={ value => editRecord(id,[date,time,value])}
+              onChange={ e => editRecord(id,[date,time,e.target.value])}
               {...params}
           />}/>
         </TableCell>
         <TableCell>
-          <IconButton onClick={deleteRecord(id)}>
+          <IconButton onClick={e => delRecord(id)}>
             <HighlightOff/>
           </IconButton>
         </TableCell>
       </TableRow> )})}
   </tbody></Table>
-)};
+)});

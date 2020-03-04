@@ -2,26 +2,22 @@
 import React from 'react';
 
 import {
-  Button, TextField, Typography,
-  AppBar,Toolbar, IconButton, makeStyles
+  Button, TextField, Typography, AppBar,Toolbar, IconButton, makeStyles
 } from '@material-ui/core';
-
-import {
-  FontAwesomeIcon
-} from '@fortawesome/react-fontawesome'
-
-import {
-  faBusinessTime,
-} from '@fortawesome/free-solid-svg-icons'
 
 import {
   purgeStore
 } from './lib'
 
 import { PresetList } from './Comment'
+import Close          from '@material-ui/icons/Close';
+import Error          from '@material-ui/icons/Error';
+import { connect }    from 'react-redux';
 
-import Close from '@material-ui/icons/Close';
-import Error from '@material-ui/icons/Error';
+import {
+  overtimeProps,
+  overtimeActions
+} from './redux'
 
 const useStyles = makeStyles(theme => ({
   menuButton: {
@@ -41,30 +37,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SettingsButton(props){
-  const {show,setShow} = props;
-  return (
-    <Button
-      onClick={e => setShow(!show)}
-      title="user / weeklyHours"
-    >
-      <FontAwesomeIcon icon={faBusinessTime}/> {props.user} / {props.weeklyHours} hrs
-    </Button>
-  )
-};
-
-function SettingsModal({
-  show, setShow, preset, addPreset, delPresetId, delPreset, user, changeUser,
-  weeklyHours, changeWeeklyHours, mailToAddress, setMailToAddress, setState
+export default connect(
+  overtimeProps,
+  overtimeActions
+)( function SettingsModal({
+  toggleSettings,
+  user,          setUser,
+  weeklyHours,   setWeeklyHours,
+  mailToAddress, setMailToAddress
 }){
   const classes = useStyles();
-  if (!show) return null;
   return (
     <>
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
-            onClick={e => setState({showSettings:false}) }>
+            onClick={toggleSettings}>
             <Close/>
           </IconButton>
           <Typography variant="h6" className={classes.title}>
@@ -76,16 +64,10 @@ function SettingsModal({
         </Toolbar>
       </AppBar>
       <form className={classes.paper} noValidate autoComplete="off">
-        <TextField fullWidth variant="outlined" label="User" name="user" value={user} onChange={changeUser}/>
-        <TextField fullWidth variant="outlined" label="eMail Target" name="mailToAddress" value={mailToAddress} onChange={setMailToAddress}/>
-        <TextField fullWidth variant="outlined" label="Weekly Hours" name="weeklyHours" value={weeklyHours} onChange={changeWeeklyHours}/>
-        <PresetList
-          preset={preset}
-          addPreset={addPreset}
-          delPresetId={delPresetId}
-        />
+        <TextField fullWidth variant="outlined" label="User" name="user" value={user} onChange={e=>setUser(e.target.value)}/>
+        <TextField fullWidth variant="outlined" label="eMail Target" name="mailToAddress" value={mailToAddress} onChange={e=>setMailToAddress(e.target.value)}/>
+        <TextField fullWidth variant="outlined" label="Weekly Hours" name="weeklyHours" value={weeklyHours} onChange={e=>setWeeklyHours(e.target.value)}/>
+        <PresetList/>
       </form>
     </>
-)};
-
-export { SettingsButton, SettingsModal }
+)});
