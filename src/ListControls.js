@@ -13,8 +13,8 @@ const useStyles = makeStyles(theme => ({
     bottom: '4em',
     background: theme.palette.background.default,
     borderTop: `solid 1px ${theme.palette.divider}`,
-    left: '5px',
-    right: '5px',
+    left: '0',
+    right: '0',
     maxHeight:'3em'
  },
 }));

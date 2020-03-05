@@ -34,7 +34,7 @@ const MainFrame = connect(
   <div className="mainFrame" style={{
     position: 'fixed',
     top:'56px',
-    bottom:location.pathname === '/'?'6.53rem':'4em',
+    bottom:location.pathname === '/'?'104px':'4em',
     left:'5px',
     right:'5px',
     overflow:'auto',
