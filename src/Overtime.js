@@ -33,7 +33,7 @@ const MainFrame = connect(
   return (
   <div className="mainFrame" style={{
     position: 'fixed',
-    top:'4.6em',
+    top:'56px',
     bottom:location.pathname === '/'?'6.53rem':'4em',
     left:'5px',
     right:'5px',

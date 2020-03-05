@@ -72,6 +72,7 @@ const EditableRow = connect(
   let utcTime = moment(time).utcOffset(0)
   return (
   <TableRow key={id}>
+  
     <TableCell>
       <IconButton onClick={e => setEdit(-1)}>
         <Edit/>
