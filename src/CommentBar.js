@@ -6,7 +6,6 @@ import TextField            from '@material-ui/core/TextField';
 import Paper                from '@material-ui/core/Paper';
 import Autocomplete         from '@material-ui/lab/Autocomplete';
 import AddCircleOutline     from '@material-ui/icons/AddCircleOutline';
-import SwapHorizontalCircle from '@material-ui/icons/SwapHorizontalCircle';
 import { makeStyles }       from '@material-ui/core/styles';
 
 import { connect }          from 'react-redux';
@@ -57,12 +56,6 @@ export default connect(
       aria-label="add preset"
       onClick={e => addPreset(comment)}
       ><AddCircleOutline/>
-    </IconButton>
-    <IconButton
-      variant="contained"
-      aria-label="add preset"
-      onClick={e => swapComment()}
-      ><SwapHorizontalCircle/>
     </IconButton>
   </Paper>
 )});

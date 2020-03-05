@@ -80,7 +80,7 @@ const EditableRow = connect(
     <TableCell>
       <DateTimePicker
         className="list-date"
-        format="DD.MM.YYYY HH:mm"
+        format="DD.MM. HH:mm"
         value={date}
         ampm={false}
         onChange={ value => editRecord(id,[value.valueOf(),time,comment])}

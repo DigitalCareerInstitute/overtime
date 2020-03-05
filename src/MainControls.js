@@ -9,26 +9,25 @@ import {
   withStyles
 } from '@material-ui/core';
 
-import { renderTotal, renderTime } from './lib'
+import {
+  renderTotal,
+  renderTime
+} from './lib'
 
-import Menu                 from '@material-ui/icons/Menu';
-import PlayCircleOutline    from '@material-ui/icons/PlayCircleOutline';
-import HighlightOff         from '@material-ui/icons/HighlightOff';
 import Star                 from '@material-ui/icons/Star';
-import StarHalf             from '@material-ui/icons/StarHalf';
-
 import ExportButtons        from './export'
-
 import { connect }          from 'react-redux';
 import {
   overtimeProps,
   overtimeActions
 } from './redux'
 
+import moment from 'moment'
+
 const classes = theme => ({
   root: { flexGrow: 1 },
   menuButton: { marginRight: theme.spacing(2) },
-  title: { flexGrow: 1, },
+  title: { flexGrow: 1, fontWeight:'bold' },
 });
 
 export default withStyles(classes)(connect(
@@ -41,24 +40,17 @@ constructor(props){
 }
 render(){
   const {
-    total, active, toggle, start, classes, toggleSettings, insertWorkday
+    total, active, start, classes, insertWorkday
   } = this.props;
 
   return (
-  <AppBar position="static">
+  <AppBar position="fixed" style={{backgroundColor: active ? 'red' : null }}>
     <Toolbar>
-      <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
-        onClick={ toggleSettings }>
-        <Menu/>
-      </IconButton>
       <Typography variant="h6" className={classes.title}>
         { active
-        ? `${renderTime(start)} / ${renderTotal(total)} `
+        ? `${moment(start).format('HH:mm')} ${renderTime(start)} / ${renderTotal(total)} `
         : renderTotal(total) }
       </Typography>
-      <IconButton className={classes.menuButton} color="inherit" aria-label="mail" onClick={e=>toggle()}>
-        { !active ? <PlayCircleOutline/> : <HighlightOff/> }
-      </IconButton>
       <IconButton className={classes.menuButton} color="inherit" aria-label="workday" onClick={e=>insertWorkday()}>
         <Star/>
       </IconButton>

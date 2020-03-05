@@ -2,8 +2,7 @@
 import React from 'react';
 
 import {
-  Button, TextField, Typography, AppBar,Toolbar, IconButton, makeStyles,
-  FormControlLabel, Checkbox
+  Button, TextField, makeStyles, FormControlLabel, Checkbox
 } from '@material-ui/core';
 
 import {
@@ -11,7 +10,6 @@ import {
 } from './lib'
 
 import { PresetList } from './Comment'
-import Close          from '@material-ui/icons/Close';
 import Error          from '@material-ui/icons/Error';
 import { connect }    from 'react-redux';
 
@@ -21,12 +19,6 @@ import {
 } from './redux'
 
 const useStyles = makeStyles(theme => ({
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
   paper: {
     '& > *': {
       marginBottom: theme.spacing(2),
@@ -55,20 +47,6 @@ export default connect(
   const classes = useStyles();
   return (
     <>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
-            onClick={toggleSettings}>
-            <Close/>
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Settings
-          </Typography>
-          <Button color="secondary" variant="contained" onClick={purgeStore}>
-            <Error/> Delete Everything <Error/>
-          </Button>
-        </Toolbar>
-      </AppBar>
       <form className={classes.paper} noValidate autoComplete="off">
         <TextField fullWidth variant="outlined" label="User" name="user" value={user} onChange={e=>setUser(e.target.value)}/>
         <TextField fullWidth variant="outlined" label="eMail Target" name="mailToAddress" value={mailToAddress} onChange={e=>setMailToAddress(e.target.value)}/>
@@ -92,6 +70,10 @@ export default connect(
            label="Count Breaks Under 15 Minutes"
          />
         <PresetList/>
+        <hr/>
+        <Button color="secondary" variant="contained" onClick={purgeStore}>
+          <Error/> Delete Everything <Error/>
+        </Button>
       </form>
     </>
 )});

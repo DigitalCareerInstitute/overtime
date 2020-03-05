@@ -75,15 +75,15 @@ export const overtimeActions = function(dispatch){ return {
   setUser:           function(value){       dispatch({ type:'setUser',           value        }); },
   setMailToAddress:  function(value){       dispatch({ type:'setMailToAddress',  value        }); },
   setComment:        function(value){       dispatch({ type:'setComment',        value        }); },
-  addPreset:         function(value){       dispatch({type:'addPreset',          value        }); },
-  delPresetId:       function(index){       dispatch({type:'delPresetId',        index        }); },
+  addPreset:         function(value){       dispatch({ type:'addPreset',          value        }); },
+  delPresetId:       function(index){       dispatch({ type:'delPresetId',        index        }); },
   swapComment:       function(){            dispatch({ type:'swapComment'                     }); },
-  toggle:            function(){            dispatch({type:'toggle',                          }); },
-  clearTimer:        function(){            dispatch({type:'clearTimer',                      }); },
-  toggleSettings:    function(){            dispatch({type:'toggleSettings',                  }); },
-  toggleCountBreaks: function(){            dispatch({type:'toggleCountBreaks',               }); },
-  toggleShortBreaks: function(){            dispatch({type:'toggleShortBreaks',               }); },
-  insertWorkday:     function(){            dispatch({type:'insertWorkday',                   }); }
+  toggle:            function(){            dispatch({ type:'toggle',                          }); },
+  clearTimer:        function(){            dispatch({ type:'clearTimer',                      }); },
+  toggleSettings:    function(){            dispatch({ type:'toggleSettings',                  }); },
+  toggleCountBreaks: function(){            dispatch({ type:'toggleCountBreaks',               }); },
+  toggleShortBreaks: function(){            dispatch({ type:'toggleShortBreaks',               }); },
+  insertWorkday:     function(){            dispatch({ type:'insertWorkday',                   }); }
 }};
 
 export const overtimeProps = state => state

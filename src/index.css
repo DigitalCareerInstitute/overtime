@@ -28,7 +28,7 @@ button.btn.preset {
 }
 
 .list-date {
-  min-width: 16ch; width: 16ch;
+  min-width: 11.5ch; width: 11.5ch;
   margin-right: 1ch !important;
 }
 
@@ -53,6 +53,14 @@ tr {
   display: flex !important;
 }
 
+td b,
+td span {
+  font-size: 130%;
+}
+td span {
+  color: lightgray
+}
+
 .MuiIconButton-root {
   padding: 0px !important;
   margin-top: 4px!important;
@@ -66,4 +74,28 @@ tr {
     padding: 0px !important;
     margin-top: 4px!important;
   }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+  left:-10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: black 0 0 10px inset;
+  border-radius: 3px;
+  padding-top:5px;
+  padding-bottom:5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  box-shadow: rgba(0,0,0,0.8) 0 0 3px inset;
+  background: #3f51b5;
+  border-radius: 3px;
+  border: 5px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  -webkit-border-radius: 0.8em;
 }
